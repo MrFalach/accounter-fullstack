@@ -1,5 +1,6 @@
 import { GraphQLError } from 'graphql';
 import { AdminBusinessesProvider } from '../providers/admin-businesses.provider.js';
+import { BusinessesProvider } from '../providers/businesses.provider.js';
 import type { FinancialEntitiesModule } from '../types.js';
 
 export const adminBusinessesResolvers: FinancialEntitiesModule.Resolvers = {
@@ -29,6 +30,12 @@ export const adminBusinessesResolvers: FinancialEntitiesModule.Resolvers = {
       }
       return admin.vat_number;
     },
-    business: admin => admin,
+    business: async (admin, _, { injector }) => {
+      const business = await injector.get(BusinessesProvider).getBusinessByIdLoader.load(admin.id);
+      if (!business) {
+        throw new GraphQLError(`Business ID="${admin.id}" not found`);
+      }
+      return business;
+    },
   },
 };

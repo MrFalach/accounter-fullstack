@@ -10,16 +10,14 @@ import type {
 } from '../types.js';
 
 const getAdminBusinessesByIds = sql<IGetAdminBusinessesByIdsQuery>`
-    SELECT *
+    SELECT ab.*, b.name, b.vat_number
     FROM accounter_schema.businesses_admin ab
     INNER JOIN accounter_schema.businesses b
-      USING (id)
-    INNER JOIN accounter_schema.financial_entities fe
       USING (id)
     WHERE ab.id IN $$ids;`;
 
 const getAllAdminBusinesses = sql<IGetAllAdminBusinessesQuery>`
-    SELECT *
+    SELECT ab.*, b.name, b.vat_number
     FROM accounter_schema.businesses_admin ab
     INNER JOIN accounter_schema.businesses b
       USING (id)
@@ -61,7 +59,10 @@ export class AdminBusinessesProvider {
     if (data) {
       return Promise.resolve(data);
     }
-    return getAllAdminBusinesses.run(undefined, this.dbProvider);
+    return getAllAdminBusinesses.run(undefined, this.dbProvider).then(result => {
+      this.cache.set('all-admin-businesses', result);
+      return result;
+    });
   }
 
   public clearCache() {

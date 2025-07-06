@@ -6,9 +6,9 @@ export default {
 create table if not exists accounter_schema.businesses_admin
 (
     id                          uuid not null
-        constraint businesses_owners_pk
+        constraint businesses_admin_pk
             primary key
-        constraint businesses_owners_businesses_id_fk
+        constraint businesses_admin_businesses_id_fk
             references accounter_schema.businesses,
     tax_siduri_number_2021      text,
     password                    text,
