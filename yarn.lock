@@ -362,6 +362,8 @@ __metadata:
     class-variance-authority: "npm:0.7.1"
     date-fns: "npm:4.1.0"
     lucide-react: "npm:0.525.0"
+    react: "npm:19.1.0"
+    react-dom: "npm:19.1.0"
     storybook: "npm:^8.4.7"
     tailwindcss: "npm:4.1.11"
     tailwindcss-animate: "npm:1.0.7"
