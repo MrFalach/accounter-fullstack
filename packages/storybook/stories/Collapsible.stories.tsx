@@ -1,6 +1,6 @@
 import { ChevronDownIcon } from 'lucide-react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from '../src/components/ui/button';
+import { Button } from '../src/components/ui/Button';
 import {
   Collapsible,
   CollapsibleContent,

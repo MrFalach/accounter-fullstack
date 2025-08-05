@@ -1,6 +1,6 @@
 import { AlertCircle, CheckCircle, Clock, Mail } from 'lucide-react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Badge } from '../src/components/ui/badge';
+import { Badge } from '../src/components/ui/Badge';
 
 const meta = {
   title: 'UI/Badge',

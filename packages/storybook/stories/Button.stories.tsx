@@ -1,7 +1,7 @@
 import { Download, Plus, Settings, Trash2 } from 'lucide-react';
 import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from '../src/components/ui/button';
+import { Button } from '../src/components/ui/Button';
 
 const meta = {
   title: 'UI/Button',
