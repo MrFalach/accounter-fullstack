@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   flexRender,
   getCoreRowModel,
@@ -6,24 +6,20 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
+import { EmptyState } from '../shared/EmptyState';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/Table';
 import { createColumns } from './columns';
 import { LedgerRecordRow, LedgerTableProps, MatchingStatus } from './types';
 
+// Status color constants
+const STATUS_COLORS = {
+  New: 'bg-green-100/30',
+  Deleted: 'bg-red-100/30',
+  Diff: 'bg-yellow-100/30',
+} as const;
+
 function getRowColorByStatus(status?: MatchingStatus): string {
-  let rowStyle = '';
-  switch (status) {
-    case 'New':
-      rowStyle = 'bg-green-100/30';
-      break;
-    case 'Deleted':
-      rowStyle = 'bg-red-100/30';
-      break;
-    case 'Diff':
-      rowStyle = 'bg-yellow-100/30';
-      break;
-  }
-  return rowStyle;
+  return status ? STATUS_COLORS[status] || '' : '';
 }
 
 export const LedgerTable: React.FC<LedgerTableProps> = ({ data, onAccountClick }) => {
@@ -74,11 +70,12 @@ export const LedgerTable: React.FC<LedgerTableProps> = ({ data, onAccountClick }
               </TableRow>
             ))
           ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
+            <EmptyState
+              icon="📊"
+              title="No ledger records found"
+              description="There are no ledger records to display at the moment."
+              colSpan={columns.length}
+            />
           )}
         </TableBody>
       </Table>

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Edit2 } from 'lucide-react';
+import { useState } from 'react';
+import { Edit2 } from 'lucide-react';
 import {
   ColumnDef,
   flexRender,
@@ -8,6 +8,7 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
+import { SortableHeader } from '../shared/SortableHeader';
 import { Button } from '../ui/Button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/Table';
 import {
@@ -33,162 +34,42 @@ const createColumns = (): ColumnDef<DocumentsTableRowType>[] => [
         'date' in rowB.original && rowB.original.date ? new Date(rowB.original.date).getTime() : 0;
       return dateA - dateB;
     },
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Date
-          {column.getIsSorted() &&
-            (column.getIsSorted() === 'asc' ? (
-              <ChevronUp className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronDown className="ml-2 h-4 w-4" />
-            ))}
-        </Button>
-      );
-    },
+    header: ({ column }) => <SortableHeader title="Date" column={column} />,
     cell: ({ row }) => <DateCell document={row.original} />,
   },
   {
     accessorKey: 'amount.raw',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Amount
-          {column.getIsSorted() &&
-            (column.getIsSorted() === 'asc' ? (
-              <ChevronUp className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronDown className="ml-2 h-4 w-4" />
-            ))}
-        </Button>
-      );
-    },
+    header: ({ column }) => <SortableHeader title="Amount" column={column} />,
     cell: ({ row }) => <AmountCell document={row.original} />,
   },
   {
     accessorKey: 'vat.raw',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          VAT
-          {column.getIsSorted() &&
-            (column.getIsSorted() === 'asc' ? (
-              <ChevronUp className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronDown className="ml-2 h-4 w-4" />
-            ))}
-        </Button>
-      );
-    },
+    header: ({ column }) => <SortableHeader title="VAT" column={column} />,
     cell: ({ row }) => <VatCell document={row.original} />,
   },
   {
     accessorKey: 'documentType',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Type
-          {column.getIsSorted() &&
-            (column.getIsSorted() === 'asc' ? (
-              <ChevronUp className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronDown className="ml-2 h-4 w-4" />
-            ))}
-        </Button>
-      );
-    },
+    header: ({ column }) => <SortableHeader title="Type" column={column} />,
     cell: ({ row }) => <TypeCell document={row.original} />,
   },
   {
     accessorKey: 'serialNumber',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Serial
-          {column.getIsSorted() &&
-            (column.getIsSorted() === 'asc' ? (
-              <ChevronUp className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronDown className="ml-2 h-4 w-4" />
-            ))}
-        </Button>
-      );
-    },
+    header: ({ column }) => <SortableHeader title="Serial" column={column} />,
     cell: ({ row }) => <SerialCell document={row.original} />,
   },
   {
     accessorKey: 'creditor.name',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Creditor
-          {column.getIsSorted() &&
-            (column.getIsSorted() === 'asc' ? (
-              <ChevronUp className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronDown className="ml-2 h-4 w-4" />
-            ))}
-        </Button>
-      );
-    },
+    header: ({ column }) => <SortableHeader title="Creditor" column={column} />,
     cell: ({ row }) => <CreditorCell document={row.original} />,
   },
   {
     accessorKey: 'debtor.name',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Debtor
-          {column.getIsSorted() &&
-            (column.getIsSorted() === 'asc' ? (
-              <ChevronUp className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronDown className="ml-2 h-4 w-4" />
-            ))}
-        </Button>
-      );
-    },
+    header: ({ column }) => <SortableHeader title="Debtor" column={column} />,
     cell: ({ row }) => <DebtorCell document={row.original} />,
   },
   {
     accessorKey: 'file',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Files
-          {column.getIsSorted() &&
-            (column.getIsSorted() === 'asc' ? (
-              <ChevronUp className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronDown className="ml-2 h-4 w-4" />
-            ))}
-        </Button>
-      );
-    },
+    header: ({ column }) => <SortableHeader title="Files" column={column} />,
     cell: ({ row }) => <FilesCell document={row.original} />,
   },
   {

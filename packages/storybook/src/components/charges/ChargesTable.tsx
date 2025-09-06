@@ -1,5 +1,6 @@
 import { ReactElement, useState } from 'react';
 import { ChargeData } from '../../mocks/charges-data';
+import { EmptyState } from '../shared/EmptyState';
 import { ChargeRow } from './ChargeRow';
 
 // Table headers configuration
@@ -49,15 +50,12 @@ export const ChargesTable = ({ data = [] }: ChargesTableProps): ReactElement => 
 
   const renderEmptyState = () => (
     <tbody>
-      <tr>
-        <td colSpan={TABLE_HEADERS.length} className="px-6 py-12 text-center">
-          <div className="flex flex-col items-center">
-            <div className="text-4xl mb-4">📊</div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No charges found</h3>
-            <p className="text-gray-500">There are no charges to display at the moment.</p>
-          </div>
-        </td>
-      </tr>
+      <EmptyState
+        icon="📊"
+        title="No charges found"
+        description="There are no charges to display at the moment."
+        colSpan={TABLE_HEADERS.length}
+      />
     </tbody>
   );
 

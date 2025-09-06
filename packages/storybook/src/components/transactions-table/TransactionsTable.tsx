@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Edit2, ExternalLink } from 'lucide-react';
+import { useState } from 'react';
+import { Edit2, ExternalLink } from 'lucide-react';
 import {
   ColumnDef,
   flexRender,
@@ -8,6 +8,7 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
+import { SortableHeader } from '../shared/SortableHeader';
 import { Button } from '../ui/Button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/Table';
 import {
@@ -25,22 +26,7 @@ import { TransactionsTableProps, TransactionsTableRowType } from './types';
 const createColumns = (): ColumnDef<TransactionsTableRowType>[] => [
   {
     accessorKey: 'counterparty.name',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Counterparty
-          {column.getIsSorted() &&
-            (column.getIsSorted() === 'asc' ? (
-              <ChevronUp className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronDown className="ml-2 h-4 w-4" />
-            ))}
-        </Button>
-      );
-    },
+    header: ({ column }) => <SortableHeader title="Counterparty" column={column} />,
     cell: ({ row }) => <CounterpartyCell transaction={row.original} />,
   },
   {
@@ -50,22 +36,7 @@ const createColumns = (): ColumnDef<TransactionsTableRowType>[] => [
       const dateB = rowB.original.eventDate ? new Date(rowB.original.eventDate).getTime() : 0;
       return dateA - dateB;
     },
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Event Date
-          {column.getIsSorted() &&
-            (column.getIsSorted() === 'asc' ? (
-              <ChevronUp className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronDown className="ml-2 h-4 w-4" />
-            ))}
-        </Button>
-      );
-    },
+    header: ({ column }) => <SortableHeader title="Event Date" column={column} />,
     cell: ({ row }) => <EventDateCell transaction={row.original} />,
   },
   {
@@ -79,102 +50,27 @@ const createColumns = (): ColumnDef<TransactionsTableRowType>[] => [
         : 0;
       return dateA - dateB;
     },
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Debit Date
-          {column.getIsSorted() &&
-            (column.getIsSorted() === 'asc' ? (
-              <ChevronUp className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronDown className="ml-2 h-4 w-4" />
-            ))}
-        </Button>
-      );
-    },
+    header: ({ column }) => <SortableHeader title="Debit Date" column={column} />,
     cell: ({ row }) => <DebitDateCell transaction={row.original} />,
   },
   {
     accessorKey: 'amount.raw',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Amount
-          {column.getIsSorted() &&
-            (column.getIsSorted() === 'asc' ? (
-              <ChevronUp className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronDown className="ml-2 h-4 w-4" />
-            ))}
-        </Button>
-      );
-    },
+    header: ({ column }) => <SortableHeader title="Amount" column={column} />,
     cell: ({ row }) => <AmountCell transaction={row.original} />,
   },
   {
     accessorKey: 'account.name',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Account
-          {column.getIsSorted() &&
-            (column.getIsSorted() === 'asc' ? (
-              <ChevronUp className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronDown className="ml-2 h-4 w-4" />
-            ))}
-        </Button>
-      );
-    },
+    header: ({ column }) => <SortableHeader title="Account" column={column} />,
     cell: ({ row }) => <AccountCell transaction={row.original} />,
   },
   {
     accessorKey: 'sourceDescription',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Description
-          {column.getIsSorted() &&
-            (column.getIsSorted() === 'asc' ? (
-              <ChevronUp className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronDown className="ml-2 h-4 w-4" />
-            ))}
-        </Button>
-      );
-    },
+    header: ({ column }) => <SortableHeader title="Description" column={column} />,
     cell: ({ row }) => <DescriptionCell transaction={row.original} />,
   },
   {
     accessorKey: 'referenceKey',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Reference#
-          {column.getIsSorted() &&
-            (column.getIsSorted() === 'asc' ? (
-              <ChevronUp className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronDown className="ml-2 h-4 w-4" />
-            ))}
-        </Button>
-      );
-    },
+    header: ({ column }) => <SortableHeader title="Reference#" column={column} />,
     cell: ({ row }) => <SourceIdCell transaction={row.original} />,
   },
   {
