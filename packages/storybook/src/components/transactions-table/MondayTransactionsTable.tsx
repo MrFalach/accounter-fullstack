@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { format } from 'date-fns';
 import {
   Bitcoin,
@@ -16,36 +16,34 @@ import {
 import { Button } from '../ui/Button';
 import { AccountType, Business, TransactionsTableProps, TransactionsTableRowType } from './types';
 
+// Account type constants
+const ACCOUNT_TYPE_CONFIG = {
+  [AccountType.BankAccount]: {
+    icon: <Building2 className="w-4 h-4" />,
+    color: 'bg-blue-100 text-blue-800 border-blue-200',
+  },
+  [AccountType.CreditCard]: {
+    icon: <CreditCard className="w-4 h-4" />,
+    color: 'bg-purple-100 text-purple-800 border-purple-200',
+  },
+  [AccountType.CryptoWallet]: {
+    icon: <Bitcoin className="w-4 h-4" />,
+    color: 'bg-orange-100 text-orange-800 border-orange-200',
+  },
+  [AccountType.Cash]: {
+    icon: <Wallet className="w-4 h-4" />,
+    color: 'bg-green-100 text-green-800 border-green-200',
+  },
+} as const;
+
 // Account type to icon mapping
 const getAccountIcon = (type: AccountType) => {
-  switch (type) {
-    case AccountType.BankAccount:
-      return <Building2 className="w-4 h-4" />;
-    case AccountType.CreditCard:
-      return <CreditCard className="w-4 h-4" />;
-    case AccountType.CryptoWallet:
-      return <Bitcoin className="w-4 h-4" />;
-    case AccountType.Cash:
-      return <Wallet className="w-4 h-4" />;
-    default:
-      return <Building2 className="w-4 h-4" />;
-  }
+  return ACCOUNT_TYPE_CONFIG[type]?.icon || <Building2 className="w-4 h-4" />;
 };
 
 // Account type to color mapping
 const getAccountColor = (type: AccountType) => {
-  switch (type) {
-    case AccountType.BankAccount:
-      return 'bg-blue-100 text-blue-800 border-blue-200';
-    case AccountType.CreditCard:
-      return 'bg-purple-100 text-purple-800 border-purple-200';
-    case AccountType.CryptoWallet:
-      return 'bg-orange-100 text-orange-800 border-orange-200';
-    case AccountType.Cash:
-      return 'bg-green-100 text-green-800 border-green-200';
-    default:
-      return 'bg-gray-100 text-gray-800 border-gray-200';
-  }
+  return ACCOUNT_TYPE_CONFIG[type]?.color || 'bg-gray-100 text-gray-800 border-gray-200';
 };
 
 // Transaction Card Component
@@ -249,7 +247,7 @@ export const MondayTransactionsTable: React.FC<TransactionsTableProps> = ({
   }));
 
   // Group data
-  const groupedData = React.useMemo(() => {
+  const groupedData = useMemo(() => {
     if (groupBy === 'none') {
       return { 'All Transactions': enhancedData };
     }
@@ -341,8 +339,11 @@ export const MondayTransactionsTable: React.FC<TransactionsTableProps> = ({
 
       {enhancedData.length === 0 && (
         <div className="text-center py-12">
-          <div className="text-gray-400 text-lg mb-2">No transactions found</div>
-          <div className="text-gray-500">Add some transactions to get started!</div>
+          <div className="flex flex-col items-center">
+            <div className="text-4xl mb-4">📊</div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No transactions found</h3>
+            <p className="text-gray-500">Add some transactions to get started!</p>
+          </div>
         </div>
       )}
     </div>

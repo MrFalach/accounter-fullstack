@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { format } from 'date-fns';
-import { AlertCircle, Check, File, Image } from 'lucide-react';
+import { Check, File, Image } from 'lucide-react';
+import { cn } from '../shared/utils';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
 import {
@@ -14,11 +15,6 @@ import {
   TypeCellProps,
   VatCellProps,
 } from './types';
-
-// Simple cn utility for combining classnames
-const cn = (...classes: (string | undefined | null | false)[]): string => {
-  return classes.filter(Boolean).join(' ');
-};
 
 // Error indicator component
 const ErrorIndicator: React.FC<{ hasError: boolean; children: React.ReactNode }> = ({
@@ -262,7 +258,7 @@ export const CreditorCell: React.FC<CreditorCellProps> = ({ document }) => {
     DocumentValidation.isUnprocessed(document.documentType);
 
   // Determine suggested creditor based on logic
-  const suggestedCreditor = React.useMemo(() => {
+  const suggestedCreditor = useMemo(() => {
     if (dbCreditor || !document.missingInfoSuggestions) {
       return undefined;
     }
@@ -298,7 +294,7 @@ export const DebtorCell: React.FC<DebtorCellProps> = ({ document }) => {
     (shouldHaveDebtor && !dbDebtor?.id) || DocumentValidation.isUnprocessed(document.documentType);
 
   // Determine suggested debtor based on logic
-  const suggestedDebtor = React.useMemo(() => {
+  const suggestedDebtor = useMemo(() => {
     if (dbDebtor || !document.missingInfoSuggestions) {
       return undefined;
     }

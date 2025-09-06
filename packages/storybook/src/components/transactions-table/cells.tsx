@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { format } from 'date-fns';
 import { Check, ChevronDown } from 'lucide-react';
+import { cn } from '../shared/utils';
 import { Button } from '../ui/Button';
 import {
   AccountCellProps,
@@ -12,11 +13,6 @@ import {
   EventDateCellProps,
   SourceIdCellProps,
 } from './types';
-
-// Simple cn utility for combining classnames
-const cn = (...classes: (string | undefined | null | false)[]): string => {
-  return classes.filter(Boolean).join(' ');
-};
 
 // Counterparty Cell Component
 export const CounterpartyCell: React.FC<CounterpartyCellProps> = ({ transaction, onChange }) => {

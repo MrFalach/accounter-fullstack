@@ -1,4 +1,3 @@
-import React from 'react';
 import { AmountCellProps, Currency } from './types';
 
 export const AmountCell: React.FC<AmountCellProps> = ({ foreignAmount, localAmount, diff }) => {

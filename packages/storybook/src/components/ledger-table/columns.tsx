@@ -1,8 +1,6 @@
-import React from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
 import { ColumnDef } from '@tanstack/react-table';
+import { SortableHeader } from '../shared/SortableHeader';
 import { Badge } from '../ui/Badge';
-import { Button } from '../ui/Button';
 import { AmountCell } from './AmountCell';
 import { CounterpartyCell } from './CounterpartyCell';
 import { DateCell } from './DateCell';
@@ -17,44 +15,14 @@ export const createColumns = ({
 }: ColumnsProps = {}): ColumnDef<LedgerRecordRow>[] => [
   {
     accessorKey: 'invoiceDate',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Invoice Date
-          {column.getIsSorted() &&
-            (column.getIsSorted() === 'asc' ? (
-              <ChevronUp className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronDown className="ml-2 h-4 w-4" />
-            ))}
-        </Button>
-      );
-    },
+    header: ({ column }) => <SortableHeader title="Invoice Date" column={column} />,
     cell: ({ row }) => {
       return <DateCell date={row.original.invoiceDate} diff={row.original.diff?.invoiceDate} />;
     },
   },
   {
     accessorKey: 'valueDate',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Value Date
-          {column.getIsSorted() &&
-            (column.getIsSorted() === 'asc' ? (
-              <ChevronUp className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronDown className="ml-2 h-4 w-4" />
-            ))}
-        </Button>
-      );
-    },
+    header: ({ column }) => <SortableHeader title="Value Date" column={column} />,
     cell: ({ row }) => {
       return <DateCell date={row.original.valueDate} diff={row.original.diff?.valueDate} />;
     },
@@ -64,22 +32,7 @@ export const createColumns = ({
     columns: [
       {
         accessorKey: 'debitAccount1.name',
-        header: ({ column }) => {
-          return (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            >
-              Account
-              {column.getIsSorted() &&
-                (column.getIsSorted() === 'asc' ? (
-                  <ChevronUp className="ml-2 h-4 w-4" />
-                ) : (
-                  <ChevronDown className="ml-2 h-4 w-4" />
-                ))}
-            </Button>
-          );
-        },
+        header: ({ column }) => <SortableHeader title="Account" column={column} />,
         cell: ({ row }) => {
           return (
             <CounterpartyCell
@@ -92,22 +45,7 @@ export const createColumns = ({
       },
       {
         accessorKey: 'localCurrencyDebitAmount1.raw',
-        header: ({ column }) => {
-          return (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            >
-              Amount
-              {column.getIsSorted() &&
-                (column.getIsSorted() === 'asc' ? (
-                  <ChevronUp className="ml-2 h-4 w-4" />
-                ) : (
-                  <ChevronDown className="ml-2 h-4 w-4" />
-                ))}
-            </Button>
-          );
-        },
+        header: ({ column }) => <SortableHeader title="Amount" column={column} />,
         cell: ({ row }) => {
           return (
             <AmountCell
@@ -132,22 +70,7 @@ export const createColumns = ({
     columns: [
       {
         accessorKey: 'creditAccount1.name',
-        header: ({ column }) => {
-          return (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            >
-              Account
-              {column.getIsSorted() &&
-                (column.getIsSorted() === 'asc' ? (
-                  <ChevronUp className="ml-2 h-4 w-4" />
-                ) : (
-                  <ChevronDown className="ml-2 h-4 w-4" />
-                ))}
-            </Button>
-          );
-        },
+        header: ({ column }) => <SortableHeader title="Account" column={column} />,
         cell: ({ row }) => {
           return (
             <CounterpartyCell
@@ -160,22 +83,7 @@ export const createColumns = ({
       },
       {
         accessorKey: 'localCurrencyCreditAmount1.raw',
-        header: ({ column }) => {
-          return (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            >
-              Amount
-              {column.getIsSorted() &&
-                (column.getIsSorted() === 'asc' ? (
-                  <ChevronUp className="ml-2 h-4 w-4" />
-                ) : (
-                  <ChevronDown className="ml-2 h-4 w-4" />
-                ))}
-            </Button>
-          );
-        },
+        header: ({ column }) => <SortableHeader title="Amount" column={column} />,
         cell: ({ row }) => {
           return (
             <AmountCell
@@ -200,22 +108,7 @@ export const createColumns = ({
     columns: [
       {
         accessorKey: 'debitAccount2.name',
-        header: ({ column }) => {
-          return (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            >
-              Account
-              {column.getIsSorted() &&
-                (column.getIsSorted() === 'asc' ? (
-                  <ChevronUp className="ml-2 h-4 w-4" />
-                ) : (
-                  <ChevronDown className="ml-2 h-4 w-4" />
-                ))}
-            </Button>
-          );
-        },
+        header: ({ column }) => <SortableHeader title="Account" column={column} />,
         cell: ({ row }) => {
           return (
             <CounterpartyCell
@@ -228,22 +121,7 @@ export const createColumns = ({
       },
       {
         accessorKey: 'localCurrencyDebitAmount2.raw',
-        header: ({ column }) => {
-          return (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            >
-              Amount
-              {column.getIsSorted() &&
-                (column.getIsSorted() === 'asc' ? (
-                  <ChevronUp className="ml-2 h-4 w-4" />
-                ) : (
-                  <ChevronDown className="ml-2 h-4 w-4" />
-                ))}
-            </Button>
-          );
-        },
+        header: ({ column }) => <SortableHeader title="Amount" column={column} />,
         cell: ({ row }) => {
           return (
             <AmountCell
@@ -268,22 +146,7 @@ export const createColumns = ({
     columns: [
       {
         accessorKey: 'creditAccount2.name',
-        header: ({ column }) => {
-          return (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            >
-              Account
-              {column.getIsSorted() &&
-                (column.getIsSorted() === 'asc' ? (
-                  <ChevronUp className="ml-2 h-4 w-4" />
-                ) : (
-                  <ChevronDown className="ml-2 h-4 w-4" />
-                ))}
-            </Button>
-          );
-        },
+        header: ({ column }) => <SortableHeader title="Account" column={column} />,
         cell: ({ row }) => {
           return (
             <CounterpartyCell
@@ -296,22 +159,7 @@ export const createColumns = ({
       },
       {
         accessorKey: 'localCurrencyCreditAmount2.raw',
-        header: ({ column }) => {
-          return (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-            >
-              Amount
-              {column.getIsSorted() &&
-                (column.getIsSorted() === 'asc' ? (
-                  <ChevronUp className="ml-2 h-4 w-4" />
-                ) : (
-                  <ChevronDown className="ml-2 h-4 w-4" />
-                ))}
-            </Button>
-          );
-        },
+        header: ({ column }) => <SortableHeader title="Amount" column={column} />,
         cell: ({ row }) => {
           return (
             <AmountCell
@@ -333,22 +181,7 @@ export const createColumns = ({
   },
   {
     accessorKey: 'description',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Details
-          {column.getIsSorted() &&
-            (column.getIsSorted() === 'asc' ? (
-              <ChevronUp className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronDown className="ml-2 h-4 w-4" />
-            ))}
-        </Button>
-      );
-    },
+    header: ({ column }) => <SortableHeader title="Details" column={column} />,
     cell: ({ row: { original } }) => {
       const isDiff = original.diff && original.diff.description !== original.description;
       return (
@@ -365,22 +198,7 @@ export const createColumns = ({
   },
   {
     accessorKey: 'reference',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Reference
-          {column.getIsSorted() &&
-            (column.getIsSorted() === 'asc' ? (
-              <ChevronUp className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronDown className="ml-2 h-4 w-4" />
-            ))}
-        </Button>
-      );
-    },
+    header: ({ column }) => <SortableHeader title="Reference" column={column} />,
     cell: ({ row: { original } }) => {
       const isDiff = original.diff && original.diff.reference !== original.reference;
       return (
@@ -397,22 +215,7 @@ export const createColumns = ({
   },
   {
     accessorKey: 'matchingStatus',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Status
-          {column.getIsSorted() &&
-            (column.getIsSorted() === 'asc' ? (
-              <ChevronUp className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronDown className="ml-2 h-4 w-4" />
-            ))}
-        </Button>
-      );
-    },
+    header: ({ column }) => <SortableHeader title="Status" column={column} />,
     cell: ({
       row: {
         original: { matchingStatus },

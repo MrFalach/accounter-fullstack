@@ -1,4 +1,3 @@
-import React from 'react';
 import { CounterpartyCellProps } from './types';
 
 interface CounterpartyCellComponentProps extends CounterpartyCellProps {
