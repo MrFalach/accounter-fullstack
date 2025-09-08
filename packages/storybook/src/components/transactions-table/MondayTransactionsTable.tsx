@@ -13,11 +13,12 @@ import {
   TrendingUp,
   Wallet,
 } from 'lucide-react';
-import { Button } from '../ui/Button';
-import { AccountType, Business, TransactionsTableProps, TransactionsTableRowType } from './types';
+import { Button } from '@accounter/client/src/components/ui/button';
+import { AccountType, TransactionsTableProps, TransactionsTableRowType } from './types';
 
 // Account type constants
-const ACCOUNT_TYPE_CONFIG = {
+type AccountTypeStyle = { icon: React.ReactNode; color: string };
+const ACCOUNT_TYPE_CONFIG: Partial<Record<AccountType, AccountTypeStyle>> = {
   [AccountType.BankAccount]: {
     icon: <Building2 className="w-4 h-4" />,
     color: 'bg-blue-100 text-blue-800 border-blue-200',
@@ -38,12 +39,12 @@ const ACCOUNT_TYPE_CONFIG = {
 
 // Account type to icon mapping
 const getAccountIcon = (type: AccountType) => {
-  return ACCOUNT_TYPE_CONFIG[type]?.icon || <Building2 className="w-4 h-4" />;
+  return ACCOUNT_TYPE_CONFIG[type]?.icon ?? <TrendingUp className="w-4 h-4" />;
 };
 
 // Account type to color mapping
 const getAccountColor = (type: AccountType) => {
-  return ACCOUNT_TYPE_CONFIG[type]?.color || 'bg-gray-100 text-gray-800 border-gray-200';
+  return ACCOUNT_TYPE_CONFIG[type]?.color ?? 'bg-gray-100 text-gray-800 border-gray-200';
 };
 
 // Transaction Card Component
@@ -67,7 +68,7 @@ const TransactionCard: React.FC<{
     chargeId,
   } = transaction;
 
-  const [showCounterpartyDropdown, setShowCounterpartyDropdown] = useState(false);
+  // const [showCounterpartyDropdown, setShowCounterpartyDropdown] = useState(false);
   const [searchTerm, setSearchTerm] = useState(sourceDescription || '');
 
   const isIncome = amount && amount.raw > 0;

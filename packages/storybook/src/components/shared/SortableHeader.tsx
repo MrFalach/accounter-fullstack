@@ -1,5 +1,5 @@
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { Button } from '../ui/Button';
+import { Button } from '@accounter/client/src/components/ui/button';
 
 interface SortableHeaderProps {
   title: string;

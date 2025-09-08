@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
 import { format } from 'date-fns';
 import { Check, File, Image } from 'lucide-react';
+import { Badge } from '@accounter/client/src/components/ui/badge';
+import { Button } from '@accounter/client/src/components/ui/button';
 import { cn } from '../shared/utils';
-import { Badge } from '../ui/Badge';
-import { Button } from '../ui/Button';
 import {
   AmountCellProps,
   CreditorCellProps,

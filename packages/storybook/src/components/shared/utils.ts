@@ -1,4 +1,2 @@
-// Simple cn utility for combining classnames
-export const cn = (...classes: (string | undefined | null | false)[]): string => {
-  return classes.filter(Boolean).join(' ');
-};
+// Re-export cn utility from client package source
+export { cn } from '@accounter/client/src/lib/utils';

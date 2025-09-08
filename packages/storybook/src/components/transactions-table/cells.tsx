@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { Check, ChevronDown } from 'lucide-react';
+import { Button } from '@accounter/client/src/components/ui/button';
 import { cn } from '../shared/utils';
-import { Button } from '../ui/Button';
 import {
   AccountCellProps,
   AmountCellProps,

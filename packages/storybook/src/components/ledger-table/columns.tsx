@@ -1,6 +1,6 @@
+import { Badge } from '@accounter/client/src/components/ui/badge';
 import { ColumnDef } from '@tanstack/react-table';
 import { SortableHeader } from '../shared/SortableHeader';
-import { Badge } from '../ui/Badge';
 import { AmountCell } from './AmountCell';
 import { CounterpartyCell } from './CounterpartyCell';
 import { DateCell } from './DateCell';

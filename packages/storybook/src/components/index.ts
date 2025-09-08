@@ -5,4 +5,3 @@ export * from './documents-table';
 export * from './transactions-table';
 export * from './ledger-table';
 export * from './shared';
-export * from './ui';
