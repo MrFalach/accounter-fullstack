@@ -1,69 +1,14 @@
-// Standalone types for Documents Table - recreated without GraphQL dependencies
+// Use client GraphQL-generated types instead of duplicating
+import type {
+  TableDocumentsRowFieldsFragment,
+  DocumentType,
+} from '@accounter/client/src/gql/graphql.js';
 
-export const DocumentType = {
-  Invoice: 'Invoice',
-  InvoiceReceipt: 'InvoiceReceipt', 
-  Receipt: 'Receipt',
-  CreditInvoice: 'CreditInvoice',
-  Proforma: 'Proforma',
-  Unprocessed: 'Unprocessed',
-  Other: 'Other',
-} as const;
-
-export type DocumentType = typeof DocumentType[keyof typeof DocumentType];
-
-export const Currency = {
-  Ils: 'ILS',
-  Usd: 'USD',
-  Eur: 'EUR',
-  Gbp: 'GBP',
-  Jpy: 'JPY',
-} as const;
-
-export type Currency = typeof Currency[keyof typeof Currency];
-
-export interface Amount {
-  raw: number;
-  formatted: string;
-  currency: Currency;
-}
-
-export interface Business {
-  id: string;
-  name: string;
-}
-
-export interface MissingInfoSuggestions {
-  amount?: Amount;
-  isIncome?: boolean;
-  counterparty?: Business;
-  owner?: Business;
-}
-
-// Base document interface that all documents inherit from
-export interface BaseDocument {
-  id: string;
-  documentType: DocumentType;
-  image?: string | null;
-  file?: string | { href: string } | null;
+// Extend the client fragment with local callbacks used only in Storybook
+export type DocumentsTableRowType = TableDocumentsRowFieldsFragment & {
   onUpdate: () => void;
   editDocument: () => void;
-}
-
-// Financial document extends base with financial fields
-export interface FinancialDocument extends BaseDocument {
-  amount?: Amount | null;
-  missingInfoSuggestions?: MissingInfoSuggestions | null;
-  date?: string | Date | null;
-  vat?: Amount | null;
-  serialNumber?: string | null;
-  allocationNumber?: string | null;
-  creditor?: Business | null;
-  debtor?: Business | null;
-}
-
-// All documents are financial documents for this table
-export type DocumentsTableRowType = FinancialDocument;
+};
 
 export interface DocumentsTableProps {
   data: DocumentsTableRowType[];
@@ -103,37 +48,37 @@ export interface DebtorCellProps {
   document: DocumentsTableRowType;
 }
 
-// Helper functions for document validation logic
+// Helper functions for document validation logic (use client enum)
 export const DocumentValidation = {
   shouldHaveAmount: (documentType: DocumentType): boolean => {
-    return documentType !== DocumentType.Other;
+    return documentType !== 'Other';
   },
 
   shouldHaveDate: (documentType: DocumentType): boolean => {
-    return documentType !== DocumentType.Other;
+    return documentType !== 'Other';
   },
 
   shouldHaveVat: (documentType: DocumentType): boolean => {
-    return documentType !== DocumentType.Other;
+    return documentType !== 'Other';
   },
 
   shouldHaveSerial: (documentType: DocumentType): boolean => {
-    return documentType !== DocumentType.Other;
+    return documentType !== 'Other';
   },
 
   shouldHaveCreditor: (documentType: DocumentType): boolean => {
-    return documentType !== DocumentType.Unprocessed && documentType !== DocumentType.Other;
+    return documentType !== 'Unprocessed' && documentType !== 'Other';
   },
 
   shouldHaveDebtor: (documentType: DocumentType): boolean => {
-    return documentType !== DocumentType.Unprocessed && documentType !== DocumentType.Other;
+    return documentType !== 'Unprocessed' && documentType !== 'Other';
   },
 
   isErrorState: (documentType: DocumentType): boolean => {
-    return documentType === DocumentType.Unprocessed;
+    return documentType === 'Unprocessed';
   },
 
   isUnprocessed: (documentType: DocumentType): boolean => {
-    return documentType === DocumentType.Unprocessed;
-  }
+    return documentType === 'Unprocessed';
+  },
 };
