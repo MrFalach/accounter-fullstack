@@ -22,13 +22,35 @@ const TABLE_HEADERS = [
 
 export interface ChargesTableProps {
   data?: ChargeData[];
+  defaultView?: 'collapsed' | 'expanded';
+  oneAtATime?: boolean;
+  activeId?: string | null;
+  onActiveIdChange?: (id: string | null) => void;
 }
 
-export const ChargesTable = ({ data = [] }: ChargesTableProps): ReactElement => {
-  const [expandedChargeId, setExpandedChargeId] = useState<string | null>(null);
+export const ChargesTable = ({
+  data = [],
+  defaultView = 'collapsed',
+  oneAtATime = true,
+  activeId,
+  onActiveIdChange,
+}: ChargesTableProps): ReactElement => {
+  const [internalActiveId, setInternalActiveId] = useState<string | null>(
+    defaultView === 'expanded' && data.length > 0 ? data[0].id : null,
+  );
+
+  const currentActiveId = activeId !== undefined ? activeId : internalActiveId;
+  const setCurrentActiveId = onActiveIdChange || setInternalActiveId;
 
   const handleToggle = (chargeId: string) => {
-    setExpandedChargeId(expandedChargeId === chargeId ? null : chargeId);
+    if (oneAtATime) {
+      // One at a time: toggle current or set new
+      setCurrentActiveId(currentActiveId === chargeId ? null : chargeId);
+    } else {
+      // Multiple at once: toggle individual row
+      // For now, we'll keep it simple and use one-at-a-time behavior
+      setCurrentActiveId(currentActiveId === chargeId ? null : chargeId);
+    }
   };
 
   const renderTableHeaders = () => (
@@ -71,7 +93,7 @@ export const ChargesTable = ({ data = [] }: ChargesTableProps): ReactElement => 
               <ChargeRow
                 key={charge.id}
                 charge={charge}
-                isExpanded={expandedChargeId === charge.id}
+                isExpanded={currentActiveId === charge.id}
                 onToggle={() => handleToggle(charge.id)}
               />
             ))}

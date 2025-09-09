@@ -22,16 +22,38 @@ const GROUP_OPTIONS = [
 
 interface MondayChargesTableProps {
   data?: ChargeData[];
+  defaultView?: 'collapsed' | 'expanded';
+  oneAtATime?: boolean;
+  activeId?: string | null;
+  onActiveIdChange?: (id: string | null) => void;
 }
 
-export const MondayChargesTable = ({ data = [] }: MondayChargesTableProps): ReactElement => {
-  const [expandedChargeId, setExpandedChargeId] = useState<string | null>(null);
+export const MondayChargesTable = ({
+  data = [],
+  defaultView = 'collapsed',
+  oneAtATime = true,
+  activeId,
+  onActiveIdChange,
+}: MondayChargesTableProps): ReactElement => {
+  const [internalActiveId, setInternalActiveId] = useState<string | null>(
+    defaultView === 'expanded' && data.length > 0 ? data[0].id : null,
+  );
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilter, setActiveFilter] = useState<string>('all');
   const [groupBy, setGroupBy] = useState<string>('none');
 
+  const currentActiveId = activeId !== undefined ? activeId : internalActiveId;
+  const setCurrentActiveId = onActiveIdChange || setInternalActiveId;
+
   const handleToggle = (chargeId: string) => {
-    setExpandedChargeId(expandedChargeId === chargeId ? null : chargeId);
+    if (oneAtATime) {
+      // One at a time: toggle current or set new
+      setCurrentActiveId(currentActiveId === chargeId ? null : chargeId);
+    } else {
+      // Multiple at once: toggle individual row
+      // For now, we'll keep it simple and use one-at-a-time behavior
+      setCurrentActiveId(currentActiveId === chargeId ? null : chargeId);
+    }
   };
 
   // Filter and search data
@@ -228,12 +250,12 @@ export const MondayChargesTable = ({ data = [] }: MondayChargesTableProps): Reac
               <div key={charge.id} className="relative">
                 <MondayChargeRow
                   charge={charge}
-                  isExpanded={expandedChargeId === charge.id}
+                  isExpanded={currentActiveId === charge.id}
                   onToggle={() => handleToggle(charge.id)}
                 />
 
                 {/* Expanded workflow indicator */}
-                {expandedChargeId === charge.id && (
+                {currentActiveId === charge.id && (
                   <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
                     <div className="flex items-center gap-2 text-blue-700">
                       <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>

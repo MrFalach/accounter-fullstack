@@ -22,8 +22,13 @@ const meta = {
       description: 'Array of charge records to display',
       control: 'object',
     },
-    isAllOpened: {
-      description: 'Whether all charges should be expanded by default',
+    defaultView: {
+      description: 'Default view mode for the table',
+      control: 'select',
+      options: ['collapsed', 'expanded'],
+    },
+    oneAtATime: {
+      description: 'Whether only one row can be expanded at a time',
       control: 'boolean',
     },
   },
@@ -32,11 +37,21 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Default story with all charges collapsed
+// Default story with all charges collapsed (minimalistic view)
 export const Default: Story = {
   args: {
     data: mockChargesData,
-    isAllOpened: false,
+    defaultView: 'collapsed',
+    oneAtATime: true,
+  },
+};
+
+// Story with charges expanded by default (full view)
+export const ExpandedByDefault: Story = {
+  args: {
+    data: mockChargesData,
+    defaultView: 'expanded',
+    oneAtATime: true,
   },
 };
 
@@ -44,7 +59,8 @@ export const Default: Story = {
 export const MinimalData: Story = {
   args: {
     data: mockChargesData.slice(0, 2),
-    isAllOpened: false,
+    defaultView: 'collapsed',
+    oneAtATime: true,
   },
 };
 
@@ -54,7 +70,8 @@ export const MixedChargeTypes: Story = {
     data: mockChargesData.filter(charge =>
       ['Common', 'CreditCardBankCharge', 'BusinessTripCharge'].includes(charge.__typename),
     ),
-    isAllOpened: false,
+    defaultView: 'collapsed',
+    oneAtATime: true,
   },
 };
 
@@ -62,6 +79,7 @@ export const MixedChargeTypes: Story = {
 export const WithBusinessTrip: Story = {
   args: {
     data: mockChargesData.filter(charge => charge.__typename === 'BusinessTripCharge'),
-    isAllOpened: false,
+    defaultView: 'collapsed',
+    oneAtATime: true,
   },
 };
