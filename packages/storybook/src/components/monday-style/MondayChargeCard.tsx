@@ -71,13 +71,8 @@ export const MondayChargeCard = ({
     });
   };
 
-  const formatAmount = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-    }).format(amount);
-  };
+  // Use the pre-formatted string from mocks; support multiple currencies
+  const renderAmount = (amountStr: string) => amountStr;
 
   return (
     <div
@@ -123,13 +118,15 @@ export const MondayChargeCard = ({
         {/* Right Section - Amount and Actions */}
         <div className="text-right">
           <div
-            className={`text-2xl font-bold ${charge.amount >= 0 ? 'text-green-600' : 'text-red-500'}`}
+            className={`text-2xl font-bold ${String(charge.amount).trim().startsWith('+') ? 'text-green-600' : 'text-red-500'}`}
           >
-            {formatAmount(charge.amount)}
+            {renderAmount(charge.amount)}
           </div>
-          {charge.vat > 0 && (
-            <div className="text-sm text-gray-500 mt-1">VAT: {formatAmount(charge.vat)}</div>
-          )}
+          {String(charge.vat).trim() !== '₪0.00' &&
+            String(charge.vat).trim() !== '$0.00' &&
+            String(charge.vat).trim() !== '€0.00' && (
+              <div className="text-sm text-gray-500 mt-1">VAT: {renderAmount(charge.vat)}</div>
+            )}
         </div>
       </div>
 
