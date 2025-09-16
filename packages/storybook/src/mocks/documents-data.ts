@@ -1,4 +1,5 @@
-import { DocumentsTableRowType, DocumentType, Currency, FinancialDocument } from '../components/documents-table/types';
+import { DocumentsTableRowType } from '../components/documents-table/types';
+import { DocumentType, Currency } from '../../../client/src/gql/graphql.js';
 
 // Mock businesses
 export const mockBusinesses = [
@@ -28,7 +29,7 @@ const getRandomBusiness = () => mockBusinesses[Math.floor(Math.random() * mockBu
 const createMockDocument = (
   id: string,
   documentType: DocumentType,
-  overrides: Partial<FinancialDocument> = {}
+  overrides: Partial<DocumentsTableRowType> = {}
 ): DocumentsTableRowType => {
   const hasImage = Math.random() > 0.3;
   const hasFile = Math.random() > 0.4;
@@ -57,8 +58,8 @@ const createMockDocument = (
     creditor: getRandomBusiness(),
     debtor: getRandomBusiness(),
     missingInfoSuggestions: null,
-    onUpdate: () => console.log(`Updated document ${id}`),
-    editDocument: () => console.log(`Edit document ${id}`),
+    onUpdate: () => {},
+    editDocument: () => {},
     ...overrides,
   } as DocumentsTableRowType;
 };

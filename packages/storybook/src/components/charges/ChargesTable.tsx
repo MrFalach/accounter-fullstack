@@ -39,18 +39,17 @@ export const ChargesTable = ({
     defaultView === 'expanded' && data.length > 0 ? data[0].id : null,
   );
 
-  const currentActiveId = activeId !== undefined ? activeId : internalActiveId;
-  const setCurrentActiveId = onActiveIdChange || setInternalActiveId;
+  const isControlled = activeId !== undefined && typeof onActiveIdChange === 'function';
+  const currentActiveId = isControlled ? (activeId as string | null) : internalActiveId;
 
   const handleToggle = (chargeId: string) => {
-    if (oneAtATime) {
-      // One at a time: toggle current or set new
-      setCurrentActiveId(currentActiveId === chargeId ? null : chargeId);
-    } else {
-      // Multiple at once: toggle individual row
-      // For now, we'll keep it simple and use one-at-a-time behavior
-      setCurrentActiveId(currentActiveId === chargeId ? null : chargeId);
+    if (isControlled && onActiveIdChange) {
+      const next = currentActiveId === chargeId ? null : chargeId;
+      onActiveIdChange(next);
+      return;
     }
+
+    setInternalActiveId(prev => (prev === chargeId ? null : chargeId));
   };
 
   const renderTableHeaders = () => (

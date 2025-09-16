@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
 import { format } from 'date-fns';
 import { Check, File, Image } from 'lucide-react';
-import { Badge } from '@accounter/client/src/components/ui/badge';
-import { Button } from '@accounter/client/src/components/ui/button';
+import { Badge } from '../../../../client/src/components/ui/badge';
+import { Button } from '../../../../client/src/components/ui/button';
 import { cn } from '../shared/utils';
 import {
   AmountCellProps,
@@ -56,7 +56,6 @@ export const AmountCell: React.FC<AmountCellProps> = ({ document }) => {
   const isError = shouldHaveAmount && amount?.formatted == null;
 
   const handleAcceptSuggestion = () => {
-    console.log('Accept suggested amount:', suggestedAmount);
     document.onUpdate();
   };
 
@@ -216,12 +215,10 @@ const BusinessCell: React.FC<{
 
   const handleBusinessClick = () => {
     if (displayBusiness?.id) {
-      console.log('Navigate to business:', displayBusiness.id);
     }
   };
 
   const handleAcceptSuggestion = () => {
-    console.log('Accept suggested business:', suggestedBusiness);
     onAcceptSuggestion?.();
   };
 

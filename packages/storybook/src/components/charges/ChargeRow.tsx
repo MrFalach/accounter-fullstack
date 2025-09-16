@@ -90,59 +90,67 @@ export interface ChargeRowProps {
   onToggle: () => void;
 }
 
-export const ChargeRow = ({ charge, isExpanded, onToggle }: ChargeRowProps): ReactElement => (
-  <>
-    <tr
-      className={`hover:bg-gray-50 cursor-pointer transition-colors ${
-        isExpanded ? 'bg-blue-50' : ''
-      }`}
-      onClick={() => charge.hasExtendedInfo && onToggle()}
-    >
-      <td className="px-6 py-4 text-sm text-gray-900">
-        <div className="flex items-center">
-          <ChargeTypeIcon type={charge.__typename} />
-          <span className="text-sm font-medium text-gray-900">{charge.__typename}</span>
-        </div>
-      </td>
-      <td className="px-6 py-4 text-sm text-gray-900">{charge.date}</td>
-      <td className="px-6 py-4 text-sm text-red-600 font-medium">{charge.amount}</td>
-      <td className="px-6 py-4 text-sm text-gray-900">{charge.vat}</td>
-      <td className="px-6 py-4 text-sm text-gray-900">{charge.counterparty}</td>
-      <td className="px-6 py-4 text-sm text-gray-900 max-w-xs truncate">{charge.description}</td>
-      <td className="px-6 py-4 text-sm text-gray-900">
-        <TagsDisplay tags={charge.tags} />
-      </td>
-      <td className="px-6 py-4 text-sm text-gray-900">{charge.taxCategory}</td>
-      <td className="px-6 py-4 text-sm text-gray-900">{charge.businessTrip || '-'}</td>
-      <td className="px-6 py-4 text-sm text-gray-600">
-        <div className="text-center">
-          <div>Transactions: {charge.moreInfo.transactions}</div>
-          <div>Ledger Records: {charge.moreInfo.ledgerRecords}</div>
-          <div>Documents: {charge.moreInfo.documents}</div>
-        </div>
-      </td>
-      <td className="px-6 py-4 text-sm text-gray-900">
-        <ApprovalBadge status={charge.accountantApproval} />
-      </td>
-      <td className="px-6 py-4 text-sm text-gray-900">
-        <button className="text-blue-600 hover:text-blue-900" onClick={e => e.stopPropagation()}>
-          ✏️
-        </button>
-      </td>
-      <td className="px-6 py-4 text-sm text-gray-900">
-        <ActionButtons
-          isExpanded={isExpanded}
-          hasExtendedInfo={charge.hasExtendedInfo}
-          onToggle={onToggle}
-        />
-      </td>
-    </tr>
-    {isExpanded && charge.hasExtendedInfo && (
-      <tr>
-        <td colSpan={13} className="px-6 py-4 bg-gray-50">
-          <ChargeExtendedInfo chargeID={charge.id} onChange={() => {}} fetching={false} />
+export const ChargeRow = ({ charge, isExpanded, onToggle }: ChargeRowProps): ReactElement => {
+  const handleClick = () => {
+    if (charge.hasExtendedInfo) {
+      onToggle();
+    }
+  };
+
+  return (
+    <>
+      <tr
+        className={`hover:bg-gray-50 cursor-pointer transition-colors ${
+          isExpanded ? 'bg-blue-50' : ''
+        }`}
+        onClick={handleClick}
+      >
+        <td className="px-6 py-4 text-sm text-gray-900">
+          <div className="flex items-center">
+            <ChargeTypeIcon type={charge.__typename} />
+            <span className="text-sm font-medium text-gray-900">{charge.__typename}</span>
+          </div>
+        </td>
+        <td className="px-6 py-4 text-sm text-gray-900">{charge.date}</td>
+        <td className="px-6 py-4 text-sm text-red-600 font-medium">{charge.amount}</td>
+        <td className="px-6 py-4 text-sm text-gray-900">{charge.vat}</td>
+        <td className="px-6 py-4 text-sm text-gray-900">{charge.counterparty}</td>
+        <td className="px-6 py-4 text-sm text-gray-900 max-w-xs truncate">{charge.description}</td>
+        <td className="px-6 py-4 text-sm text-gray-900">
+          <TagsDisplay tags={charge.tags} />
+        </td>
+        <td className="px-6 py-4 text-sm text-gray-900">{charge.taxCategory}</td>
+        <td className="px-6 py-4 text-sm text-gray-900">{charge.businessTrip || '-'}</td>
+        <td className="px-6 py-4 text-sm text-gray-600">
+          <div className="text-center">
+            <div>Transactions: {charge.moreInfo.transactions}</div>
+            <div>Ledger Records: {charge.moreInfo.ledgerRecords}</div>
+            <div>Documents: {charge.moreInfo.documents}</div>
+          </div>
+        </td>
+        <td className="px-6 py-4 text-sm text-gray-900">
+          <ApprovalBadge status={charge.accountantApproval} />
+        </td>
+        <td className="px-6 py-4 text-sm text-gray-900">
+          <button className="text-blue-600 hover:text-blue-900" onClick={e => e.stopPropagation()}>
+            ✏️
+          </button>
+        </td>
+        <td className="px-6 py-4 text-sm text-gray-900">
+          <ActionButtons
+            isExpanded={isExpanded}
+            hasExtendedInfo={charge.hasExtendedInfo}
+            onToggle={onToggle}
+          />
         </td>
       </tr>
-    )}
-  </>
-);
+      {isExpanded && charge.hasExtendedInfo && (
+        <tr>
+          <td colSpan={13} className="px-6 py-4 bg-gray-50">
+            <ChargeExtendedInfo chargeID={charge.id} onChange={() => {}} fetching={false} />
+          </td>
+        </tr>
+      )}
+    </>
+  );
+};

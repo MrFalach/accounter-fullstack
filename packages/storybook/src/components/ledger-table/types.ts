@@ -1,14 +1,13 @@
-// Standalone types for Ledger Table - recreated without GraphQL dependencies
+// Use client GraphQL-generated types instead of duplicating
+import type {
+  TableLedgerRecordsFieldsFragment,
+} from '../../../../client/src/gql/graphql.js';
+import {
+  Currency,
+} from '../../../../client/src/gql/graphql.js';
 
-export const Currency = {
-  Ils: 'ILS',
-  Usd: 'USD',
-  Eur: 'EUR',
-  Gbp: 'GBP',
-  Jpy: 'JPY',
-} as const;
-
-export type Currency = typeof Currency[keyof typeof Currency];
+// Re-export for other components to use
+export { Currency };
 
 export interface Account {
   __typename: string;

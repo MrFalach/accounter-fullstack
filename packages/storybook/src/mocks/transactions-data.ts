@@ -2,14 +2,14 @@ import { TransactionsTableRowType, AccountType, Account, Business } from '../com
 
 // Mock accounts
 export const mockAccounts: Account[] = [
-  { id: '1', __typename: 'FinancialAccount', name: 'Main Checking Account', type: AccountType.BankAccount },
-  { id: '2', __typename: 'FinancialAccount', name: 'Business Credit Card', type: AccountType.CreditCard },
-  { id: '3', __typename: 'FinancialAccount', name: 'Cash Register', type: AccountType.Cash },
-  { id: '4', __typename: 'FinancialAccount', name: 'Bitcoin Wallet', type: AccountType.CryptoWallet },
-  { id: '5', __typename: 'FinancialAccount', name: 'Investment Portfolio', type: AccountType.Investment },
-  { id: '6', __typename: 'FinancialAccount', name: 'Business Loan', type: AccountType.Loan },
-  { id: '7', __typename: 'FinancialAccount', name: 'Savings Account', type: AccountType.BankAccount },
-  { id: '8', __typename: 'FinancialAccount', name: 'Ethereum Wallet', type: AccountType.CryptoWallet },
+  { id: '1', __typename: 'BankFinancialAccount', name: 'Main Checking Account', type: 'Bank Account' },
+  { id: '2', __typename: 'CardFinancialAccount', name: 'Business Credit Card', type: 'Credit Card' },
+  { id: '3', __typename: 'BankFinancialAccount', name: 'Cash Register', type: 'Cash Account' },
+  { id: '4', __typename: 'CryptoWalletFinancialAccount', name: 'Bitcoin Wallet', type: 'Bitcoin Wallet' },
+  { id: '5', __typename: 'BankFinancialAccount', name: 'Investment Portfolio', type: 'Investment Account' },
+  { id: '6', __typename: 'BankFinancialAccount', name: 'Business Loan', type: 'Loan Account' },
+  { id: '7', __typename: 'BankFinancialAccount', name: 'Savings Account', type: 'Savings Account' },
+  { id: '8', __typename: 'CryptoWalletFinancialAccount', name: 'Ethereum Wallet', type: 'Ethereum Wallet' },
 ];
 
 // Mock businesses
@@ -61,8 +61,8 @@ export const mockTransactionsData: TransactionsTableRowType[] = [
     sourceDescription: 'AWS Cloud Services - Monthly Bill',
     referenceKey: generateReferenceKey(),
     counterparty: mockBusinesses[0], // AWS
-    onUpdate: () => console.log('Updated transaction 1'),
-    editTransaction: () => console.log('Edit transaction 1'),
+    onUpdate: () => {},
+    editTransaction: () => {},
     enableEdit: true,
     enableChargeLink: true,
   },
@@ -78,8 +78,8 @@ export const mockTransactionsData: TransactionsTableRowType[] = [
     sourceDescription: 'Invoice Payment - Project Alpha',
     referenceKey: generateReferenceKey(),
     counterparty: mockBusinesses[10], // Client ABC
-    onUpdate: () => console.log('Updated transaction 2'),
-    editTransaction: () => console.log('Edit transaction 2'),
+    onUpdate: () => {},
+    editTransaction: () => {},
     enableEdit: true,
     enableChargeLink: true,
   },
@@ -95,8 +95,8 @@ export const mockTransactionsData: TransactionsTableRowType[] = [
     sourceDescription: 'Office Supplies and Equipment',
     referenceKey: generateReferenceKey(),
     counterparty: mockBusinesses[6], // Apple
-    onUpdate: () => console.log('Updated transaction 3'),
-    editTransaction: () => console.log('Edit transaction 3'),
+    onUpdate: () => {},
+    editTransaction: () => {},
     enableEdit: true,
     enableChargeLink: false,
   },
@@ -116,8 +116,8 @@ export const mockTransactionsData: TransactionsTableRowType[] = [
     missingInfoSuggestions: {
       business: { id: 'suggested_1', name: 'Coinbase Exchange' }
     },
-    onUpdate: () => console.log('Updated transaction 4'),
-    editTransaction: () => console.log('Edit transaction 4'),
+    onUpdate: () => {},
+    editTransaction: () => {},
     enableEdit: true,
     enableChargeLink: true,
   },
@@ -133,8 +133,8 @@ export const mockTransactionsData: TransactionsTableRowType[] = [
     sourceDescription: 'Netflix Monthly Subscription',
     referenceKey: generateReferenceKey(),
     counterparty: mockBusinesses[7], // Netflix
-    onUpdate: () => console.log('Updated transaction 5'),
-    editTransaction: () => console.log('Edit transaction 5'),
+    onUpdate: () => {},
+    editTransaction: () => {},
     enableEdit: false,
     enableChargeLink: true,
   },
@@ -149,8 +149,8 @@ export const mockTransactionsData: TransactionsTableRowType[] = [
     sourceDescription: 'Coffee and lunch expenses',
     referenceKey: generateReferenceKey(),
     counterparty: mockBusinesses[3], // Starbucks
-    onUpdate: () => console.log('Updated transaction 6'),
-    editTransaction: () => console.log('Edit transaction 6'),
+    onUpdate: () => {},
+    editTransaction: () => {},
     enableEdit: true,
     enableChargeLink: false,
   },
@@ -169,8 +169,8 @@ export const mockTransactionsData: TransactionsTableRowType[] = [
     missingInfoSuggestions: {
       business: { id: 'suggested_2', name: 'Tech Equipment Store' }
     },
-    onUpdate: () => console.log('Updated transaction 7'),
-    editTransaction: () => console.log('Edit transaction 7'),
+    onUpdate: () => {},
+    editTransaction: () => {},
     enableEdit: true,
     enableChargeLink: true,
   },
@@ -186,8 +186,8 @@ export const mockTransactionsData: TransactionsTableRowType[] = [
     sourceDescription: 'Quarterly retainer payment',
     referenceKey: generateReferenceKey(),
     counterparty: mockBusinesses[11], // Client XYZ
-    onUpdate: () => console.log('Updated transaction 8'),
-    editTransaction: () => console.log('Edit transaction 8'),
+    onUpdate: () => {},
+    editTransaction: () => {},
     enableEdit: false,
     enableChargeLink: true,
   },
@@ -204,8 +204,8 @@ export const mockTransactionsData: TransactionsTableRowType[] = [
     sourceDescription: 'Ethereum staking rewards',
     referenceKey: generateReferenceKey(),
     counterparty: null,
-    onUpdate: () => console.log('Updated transaction 9'),
-    editTransaction: () => console.log('Edit transaction 9'),
+    onUpdate: () => {},
+    editTransaction: () => {},
     enableEdit: true,
     enableChargeLink: false,
   },
@@ -220,8 +220,8 @@ export const mockTransactionsData: TransactionsTableRowType[] = [
     sourceDescription: 'Monthly electricity bill',
     referenceKey: generateReferenceKey(),
     counterparty: mockBusinesses[13], // Electric Company
-    onUpdate: () => console.log('Updated transaction 10'),
-    editTransaction: () => console.log('Edit transaction 10'),
+    onUpdate: () => {},
+    editTransaction: () => {},
     enableEdit: true,
     enableChargeLink: true,
   },

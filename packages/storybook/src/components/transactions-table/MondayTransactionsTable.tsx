@@ -13,27 +13,23 @@ import {
   TrendingUp,
   Wallet,
 } from 'lucide-react';
-import { Button } from '@accounter/client/src/components/ui/button';
+import { Button } from '../../../../client/src/components/ui/button';
 import { AccountType, TransactionsTableProps, TransactionsTableRowType } from './types';
 
 // Account type constants
 type AccountTypeStyle = { icon: React.ReactNode; color: string };
 const ACCOUNT_TYPE_CONFIG: Partial<Record<AccountType, AccountTypeStyle>> = {
-  [AccountType.BankAccount]: {
+  [AccountType.BankFinancialAccount]: {
     icon: <Building2 className="w-4 h-4" />,
     color: 'bg-blue-100 text-blue-800 border-blue-200',
   },
-  [AccountType.CreditCard]: {
+  [AccountType.CardFinancialAccount]: {
     icon: <CreditCard className="w-4 h-4" />,
     color: 'bg-purple-100 text-purple-800 border-purple-200',
   },
-  [AccountType.CryptoWallet]: {
+  [AccountType.CryptoWalletFinancialAccount]: {
     icon: <Bitcoin className="w-4 h-4" />,
     color: 'bg-orange-100 text-orange-800 border-orange-200',
-  },
-  [AccountType.Cash]: {
-    icon: <Wallet className="w-4 h-4" />,
-    color: 'bg-green-100 text-green-800 border-green-200',
   },
 } as const;
 
@@ -84,13 +80,10 @@ const TransactionCard: React.FC<{
   };
 
   const handleApproveSelection = () => {
-    console.log('Approve business:', suggestedBusiness);
     onCounterpartyUpdate?.();
   };
 
-  const handleBusinessClick = (businessId: string) => {
-    console.log('Navigate to business:', businessId);
-  };
+  const handleBusinessClick = (_businessId: string) => {};
 
   return (
     <div className="group bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all duration-200 p-6 mb-3">
@@ -155,8 +148,10 @@ const TransactionCard: React.FC<{
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
         {/* Account Info */}
         <div className="flex items-center gap-3">
-          <div className={`p-2 rounded-lg border ${getAccountColor(account.type)}`}>
-            {getAccountIcon(account.type)}
+          <div
+            className={`p-2 rounded-lg border ${getAccountColor(account.__typename as AccountType)}`}
+          >
+            {getAccountIcon(account.__typename as AccountType)}
           </div>
           <div>
             <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">
@@ -211,7 +206,7 @@ const TransactionCard: React.FC<{
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => console.log('Navigate to charge:', chargeId)}
+                onClick={() => {}}
                 className="p-2 h-8 w-8 hover:bg-green-50 hover:text-green-600"
               >
                 <ExternalLink className="h-4 w-4" />

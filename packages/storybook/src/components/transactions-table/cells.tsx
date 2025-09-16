@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { Check, ChevronDown } from 'lucide-react';
-import { Button } from '@accounter/client/src/components/ui/button';
+import { Button } from '../../../../client/src/components/ui/button';
 import { cn } from '../shared/utils';
 import {
   AccountCellProps,
@@ -27,21 +27,18 @@ export const CounterpartyCell: React.FC<CounterpartyCellProps> = ({ transaction,
 
   const displayName = counterparty?.name ?? (suggestedBusiness?.name || 'Missing');
 
-  const handleBusinessClick = (businessId: string) => {
-    console.log('Navigate to business transactions:', businessId);
-  };
+  const handleBusinessClick = (businessId: string) => {};
 
   const handleApproveSelection = () => {
     if (selectedBusiness || suggestedBusiness) {
       const businessToApprove = selectedBusiness || suggestedBusiness;
-      console.log('Approve business:', businessToApprove);
+
       onChange?.();
       // Show similar transactions modal in real app
     }
   };
 
   const handleCreateBusiness = () => {
-    console.log('Create new business with description:', searchTerm);
     onChange?.();
   };
 

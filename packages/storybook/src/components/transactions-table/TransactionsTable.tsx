@@ -1,14 +1,5 @@
 import { useState } from 'react';
 import { Edit2, ExternalLink } from 'lucide-react';
-import { Button } from '@accounter/client/src/components/ui/button';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@accounter/client/src/components/ui/table';
 import {
   ColumnDef,
   flexRender,
@@ -17,6 +8,15 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
+import { Button } from '../../../../client/src/components/ui/button';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../../../../client/src/components/ui/table';
 import { SortableHeader } from '../shared/SortableHeader';
 import {
   AccountCell,
@@ -112,12 +112,7 @@ const createColumns = (): ColumnDef<TransactionsTableRowType>[] => [
           )}
 
           {enableChargeLink && chargeId && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => console.log('Navigate to charge:', chargeId)}
-              className="h-8 w-8"
-            >
+            <Button variant="ghost" size="icon" onClick={() => {}} className="h-8 w-8">
               <ExternalLink className="h-4 w-4" />
             </Button>
           )}

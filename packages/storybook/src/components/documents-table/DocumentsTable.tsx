@@ -1,14 +1,5 @@
 import { useState } from 'react';
 import { Edit2 } from 'lucide-react';
-import { Button } from '@accounter/client/components/ui/button';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@accounter/client/components/ui/table';
 import {
   ColumnDef,
   flexRender,
@@ -17,6 +8,15 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
+import { Button } from '../../../../client/src/components/ui/button';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../../../../client/src/components/ui/table';
 import { SortableHeader } from '../shared/SortableHeader';
 import {
   AmountCell,

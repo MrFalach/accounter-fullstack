@@ -12,6 +12,7 @@ docker/.*
 **/mesh-artifacts
 .bob/
 .DS_Store
+**/storybook-static/
 
 .pnp.*
 .yarn/*

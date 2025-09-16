@@ -51,11 +51,15 @@ export const MondayChargeCard = ({
   isExpanded,
   onToggle,
 }: MondayChargeCardProps): ReactElement => {
+  const handleCardClick = () => {
+    onToggle();
+  };
   const statusConfig =
     STATUS_CONFIG[charge.accountantApproval as keyof typeof STATUS_CONFIG] ||
     STATUS_CONFIG.UNAPPROVED;
   const typeConfig =
-    CHARGE_TYPE_CONFIG[charge.type as keyof typeof CHARGE_TYPE_CONFIG] || CHARGE_TYPE_CONFIG.Common;
+    CHARGE_TYPE_CONFIG[charge.__typename as keyof typeof CHARGE_TYPE_CONFIG] ||
+    CHARGE_TYPE_CONFIG.Common;
   const StatusIcon = statusConfig.icon;
   const TypeIcon = typeConfig.icon;
 
@@ -80,7 +84,7 @@ export const MondayChargeCard = ({
       className={`group bg-white rounded-xl border shadow-sm hover:shadow-md hover:border-blue-300 transition-all duration-200 p-6 mb-4 cursor-pointer ${
         isExpanded ? 'border-blue-300 shadow-md bg-blue-50/30' : 'border-gray-200'
       }`}
-      onClick={onToggle}
+      onClick={handleCardClick}
     >
       {/* Header Row */}
       <div className="flex items-start justify-between mb-4">

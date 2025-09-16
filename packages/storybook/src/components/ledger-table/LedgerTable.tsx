@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@accounter/client/src/components/ui/table';
-import {
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../../../../client/src/components/ui/table';
 import { EmptyState } from '../shared/EmptyState';
 import { createColumns } from './columns';
 import { LedgerRecordRow, LedgerTableProps, MatchingStatus } from './types';
