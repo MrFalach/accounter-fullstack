@@ -128,193 +128,215 @@ export const MondayChargeExtendedInfo = ({
   return (
     <div className="space-y-6">
       {/* Transactions Table */}
-      <MondayTable
-        title="Transactions"
-        count={transactionsCount}
-        icon={<TrendingUp className="w-5 h-5" />}
-      >
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-gray-200">
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
-                  Counterparty
-                </th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Date</th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Amount</th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Account</th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
-                  Description
-                </th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
-                  Reference
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactions.map(transaction => (
-                <tr
-                  key={transaction.id}
-                  className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
-                >
-                  <td className="py-3 px-4">
-                    <MondayBusinessCell business={transaction.counterparty} />
-                  </td>
-                  <td className="py-3 px-4">
-                    <MondayDateCell date={transaction.eventDate} />
-                  </td>
-                  <td className="py-3 px-4">
-                    <MondayAmountCell amount={transaction.amount.raw} />
-                  </td>
-                  <td className="py-3 px-4">
-                    <MondayAccountCell account={transaction.account} />
-                  </td>
-                  <td className="py-3 px-4">
-                    <MondayDescriptionCell description={transaction.sourceDescription} />
-                  </td>
-                  <td className="py-3 px-4">
-                    <MondayReferenceCell reference={transaction.referenceKey} />
-                  </td>
+      <div className="bg-gradient-to-r from-blue-50/30 to-indigo-50/30 rounded-xl p-4 border border-blue-100/50">
+        <MondayTable
+          title="Transactions"
+          count={transactionsCount}
+          icon={<TrendingUp className="w-5 h-5 text-blue-600" />}
+        >
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-gray-200">
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
+                    Counterparty
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Date</th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
+                    Amount
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
+                    Account
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
+                    Description
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
+                    Reference
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </MondayTable>
+              </thead>
+              <tbody>
+                {transactions.map(transaction => (
+                  <tr
+                    key={transaction.id}
+                    className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
+                  >
+                    <td className="py-3 px-4">
+                      <MondayBusinessCell business={transaction.counterparty} />
+                    </td>
+                    <td className="py-3 px-4">
+                      <MondayDateCell date={transaction.eventDate} />
+                    </td>
+                    <td className="py-3 px-4">
+                      <MondayAmountCell amount={transaction.amount.raw} />
+                    </td>
+                    <td className="py-3 px-4">
+                      <MondayAccountCell account={transaction.account} />
+                    </td>
+                    <td className="py-3 px-4">
+                      <MondayDescriptionCell description={transaction.sourceDescription} />
+                    </td>
+                    <td className="py-3 px-4">
+                      <MondayReferenceCell reference={transaction.referenceKey} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </MondayTable>
+      </div>
 
       {/* Documents Table */}
-      <MondayTable title="Documents" count={documentsCount} icon={<FileText className="w-5 h-5" />}>
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-gray-200">
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Date</th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Amount</th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">VAT</th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Type</th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Serial</th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
-                  Creditor
-                </th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Debtor</th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Files</th>
-              </tr>
-            </thead>
-            <tbody>
-              {documents.map(document => (
-                <tr
-                  key={document.id}
-                  className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
-                >
-                  <td className="py-3 px-4">
-                    <MondayDateCell date={document.date} />
-                  </td>
-                  <td className="py-3 px-4">
-                    <MondayAmountCell amount={document.amount.raw} />
-                  </td>
-                  <td className="py-3 px-4">
-                    <MondayAmountCell amount={document.vat.raw} />
-                  </td>
-                  <td className="py-3 px-4">
-                    <MondayTypeCell type={document.documentType} />
-                  </td>
-                  <td className="py-3 px-4">
-                    <MondaySerialCell serial={document.serialNumber} />
-                  </td>
-                  <td className="py-3 px-4">
-                    <MondayBusinessCell business={document.creditor} />
-                  </td>
-                  <td className="py-3 px-4">
-                    <MondayBusinessCell business={document.debtor} />
-                  </td>
-                  <td className="py-3 px-4">
-                    <div className="text-sm text-gray-500">
-                      {document.file} • {document.image}
-                    </div>
-                  </td>
+      <div className="bg-gradient-to-r from-emerald-50/30 to-teal-50/30 rounded-xl p-4 border border-emerald-100/50">
+        <MondayTable
+          title="Documents"
+          count={documentsCount}
+          icon={<FileText className="w-5 h-5 text-emerald-600" />}
+        >
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-gray-200">
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Date</th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
+                    Amount
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">VAT</th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Type</th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
+                    Serial
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
+                    Creditor
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
+                    Debtor
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Files</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </MondayTable>
+              </thead>
+              <tbody>
+                {documents.map(document => (
+                  <tr
+                    key={document.id}
+                    className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
+                  >
+                    <td className="py-3 px-4">
+                      <MondayDateCell date={document.date} />
+                    </td>
+                    <td className="py-3 px-4">
+                      <MondayAmountCell amount={document.amount.raw} />
+                    </td>
+                    <td className="py-3 px-4">
+                      <MondayAmountCell amount={document.vat.raw} />
+                    </td>
+                    <td className="py-3 px-4">
+                      <MondayTypeCell type={document.documentType} />
+                    </td>
+                    <td className="py-3 px-4">
+                      <MondaySerialCell serial={document.serialNumber} />
+                    </td>
+                    <td className="py-3 px-4">
+                      <MondayBusinessCell business={document.creditor} />
+                    </td>
+                    <td className="py-3 px-4">
+                      <MondayBusinessCell business={document.debtor} />
+                    </td>
+                    <td className="py-3 px-4">
+                      <div className="text-sm text-gray-500">
+                        {document.file} • {document.image}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </MondayTable>
+      </div>
 
       {/* Ledger Records Table */}
-      <MondayTable
-        title="Ledger Records"
-        count={ledgerRecordsCount}
-        icon={<CheckCircle className="w-5 h-5" />}
-      >
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-gray-200">
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
-                  Invoice Date
-                </th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
-                  Value Date
-                </th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
-                  Debit Account
-                </th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
-                  Debit Amount
-                </th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
-                  Credit Account
-                </th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
-                  Credit Amount
-                </th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
-                  Description
-                </th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
-                  Reference
-                </th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {ledgerRecords.map(record => (
-                <tr
-                  key={record.id}
-                  className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
-                >
-                  <td className="py-3 px-4">
-                    <MondayDateCell date={record.invoiceDate} />
-                  </td>
-                  <td className="py-3 px-4">
-                    <MondayDateCell date={record.valueDate} />
-                  </td>
-                  <td className="py-3 px-4">
-                    <MondayAccountCell account={record.debitAccount1} />
-                  </td>
-                  <td className="py-3 px-4">
-                    <MondayAmountCell amount={record.debitAmount1.raw} />
-                  </td>
-                  <td className="py-3 px-4">
-                    <MondayAccountCell account={record.creditAccount1} />
-                  </td>
-                  <td className="py-3 px-4">
-                    <MondayAmountCell amount={record.creditAmount1.raw} />
-                  </td>
-                  <td className="py-3 px-4">
-                    <MondayDescriptionCell description={record.description} />
-                  </td>
-                  <td className="py-3 px-4">
-                    <MondayReferenceCell reference={record.reference} />
-                  </td>
-                  <td className="py-3 px-4">
-                    <MondayStatusCell status={record.matchingStatus} />
-                  </td>
+      <div className="bg-gradient-to-r from-amber-50/30 to-orange-50/30 rounded-xl p-4 border border-amber-100/50">
+        <MondayTable
+          title="Ledger Records"
+          count={ledgerRecordsCount}
+          icon={<CheckCircle className="w-5 h-5 text-amber-600" />}
+        >
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-gray-200">
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
+                    Invoice Date
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
+                    Value Date
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
+                    Debit Account
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
+                    Debit Amount
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
+                    Credit Account
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
+                    Credit Amount
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
+                    Description
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
+                    Reference
+                  </th>
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">
+                    Status
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </MondayTable>
+              </thead>
+              <tbody>
+                {ledgerRecords.map(record => (
+                  <tr
+                    key={record.id}
+                    className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
+                  >
+                    <td className="py-3 px-4">
+                      <MondayDateCell date={record.invoiceDate} />
+                    </td>
+                    <td className="py-3 px-4">
+                      <MondayDateCell date={record.valueDate} />
+                    </td>
+                    <td className="py-3 px-4">
+                      <MondayAccountCell account={record.debitAccount1} />
+                    </td>
+                    <td className="py-3 px-4">
+                      <MondayAmountCell amount={record.debitAmount1.raw} />
+                    </td>
+                    <td className="py-3 px-4">
+                      <MondayAccountCell account={record.creditAccount1} />
+                    </td>
+                    <td className="py-3 px-4">
+                      <MondayAmountCell amount={record.creditAmount1.raw} />
+                    </td>
+                    <td className="py-3 px-4">
+                      <MondayDescriptionCell description={record.description} />
+                    </td>
+                    <td className="py-3 px-4">
+                      <MondayReferenceCell reference={record.reference} />
+                    </td>
+                    <td className="py-3 px-4">
+                      <MondayStatusCell status={record.matchingStatus} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </MondayTable>
+      </div>
     </div>
   );
 };
