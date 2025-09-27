@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { MondayWorkflowTables } from '../../src/components/monday-style/MondayWorkflowTables';
+import { MondayChargeExtendedInfo } from '../../src/components/monday-style/MondayChargeExtendedInfo';
 
-const meta: Meta<typeof MondayWorkflowTables> = {
-  title: 'MondayStyle/MondayWorkflowTables',
-  component: MondayWorkflowTables,
+const meta: Meta<typeof MondayChargeExtendedInfo> = {
+  title: 'MondayStyle/MondayChargeExtendedInfo',
+  component: MondayChargeExtendedInfo,
   parameters: {
     layout: 'fullscreen',
     docs: {
       description: {
         component:
-          'Monday.com-style workflow tables showing transactions, documents, and ledger records with full details.',
+          'Monday.com-style extended charge information showing transactions, documents, and ledger records with full details.',
       },
     },
   },
@@ -30,7 +30,7 @@ const meta: Meta<typeof MondayWorkflowTables> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof MondayWorkflowTables>;
+type Story = StoryObj<typeof MondayChargeExtendedInfo>;
 
 export const Default: Story = {
   args: {

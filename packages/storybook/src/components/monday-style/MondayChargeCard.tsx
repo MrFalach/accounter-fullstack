@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { ChargeData } from '../../mocks/charges-data';
 import { FormattedAmount } from '../common/FormattedAmount';
-import { MondayWorkflowTables } from './MondayWorkflowTables';
+import { MondayChargeExtendedInfo } from './MondayChargeExtendedInfo';
 
 // Status configuration
 const STATUS_CONFIG = {
@@ -273,8 +273,8 @@ export const MondayChargeCard = ({
             </div>
           </div>
 
-          {/* Workflow Tables */}
-          <MondayWorkflowTables
+          {/* Extended Info Tables */}
+          <MondayChargeExtendedInfo
             transactionsCount={charge.moreInfo.transactions}
             documentsCount={charge.moreInfo.documents}
             ledgerRecordsCount={charge.moreInfo.ledgerRecords}
