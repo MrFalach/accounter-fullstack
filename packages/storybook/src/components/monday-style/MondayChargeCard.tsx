@@ -1,16 +1,20 @@
 import { ReactElement } from 'react';
 import {
+  ArrowLeftRight,
+  Briefcase,
   Calendar,
   CheckCircle,
   Clock,
-  DollarSign,
+  CreditCard,
   FileText,
+  Plane,
   Tag,
   TrendingUp,
   User,
   XCircle,
 } from 'lucide-react';
 import { ChargeData } from '../../mocks/charges-data';
+import { FormattedAmount } from '../common/FormattedAmount';
 import { MondayWorkflowTables } from './MondayWorkflowTables';
 
 // Status configuration
@@ -34,10 +38,10 @@ const STATUS_CONFIG = {
 
 // Charge type configuration
 const CHARGE_TYPE_CONFIG = {
-  Common: { icon: FileText, color: 'bg-blue-100 text-blue-600' },
-  CreditCardBankCharge: { icon: DollarSign, color: 'bg-purple-100 text-purple-600' },
-  BusinessTripCharge: { icon: TrendingUp, color: 'bg-orange-100 text-orange-600' },
-  ConversionCharge: { icon: Tag, color: 'bg-green-100 text-green-600' },
+  Common: { icon: Briefcase, color: 'bg-blue-100 text-blue-600' },
+  CreditCardBankCharge: { icon: CreditCard, color: 'bg-purple-100 text-purple-600' },
+  BusinessTripCharge: { icon: Plane, color: 'bg-orange-100 text-orange-600' },
+  ConversionCharge: { icon: ArrowLeftRight, color: 'bg-green-100 text-green-600' },
 } as const;
 
 interface MondayChargeCardProps {
@@ -70,9 +74,6 @@ export const MondayChargeCard = ({
       year: 'numeric',
     });
   };
-
-  // Use the pre-formatted string from mocks; support multiple currencies
-  const renderAmount = (amountStr: string) => amountStr;
 
   return (
     <div
@@ -117,15 +118,15 @@ export const MondayChargeCard = ({
 
         {/* Right Section - Amount and Actions */}
         <div className="text-right">
-          <div
-            className={`text-2xl font-bold ${String(charge.amount).trim().startsWith('+') ? 'text-green-600' : 'text-red-500'}`}
-          >
-            {renderAmount(charge.amount)}
+          <div className="text-2xl font-bold">
+            <FormattedAmount amount={charge.amount} />
           </div>
           {String(charge.vat).trim() !== '₪0.00' &&
             String(charge.vat).trim() !== '$0.00' &&
             String(charge.vat).trim() !== '€0.00' && (
-              <div className="text-sm text-gray-500 mt-1">VAT: {renderAmount(charge.vat)}</div>
+              <div className="text-sm text-gray-500 mt-1">
+                VAT: <FormattedAmount amount={charge.vat} showSign={false} />
+              </div>
             )}
         </div>
       </div>

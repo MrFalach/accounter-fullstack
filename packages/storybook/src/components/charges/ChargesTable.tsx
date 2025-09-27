@@ -1,4 +1,5 @@
 import { ReactElement, useState } from 'react';
+import { BarChart3 } from 'lucide-react';
 import { ChargeData } from '../../mocks/charges-data';
 import { EmptyState } from '../shared/EmptyState';
 import { ChargeRow } from './ChargeRow';
@@ -72,7 +73,7 @@ export const ChargesTable = ({
   const renderEmptyState = () => (
     <tbody>
       <EmptyState
-        icon="📊"
+        icon={<BarChart3 className="w-8 h-8 text-gray-400" />}
         title="No charges found"
         description="There are no charges to display at the moment."
         colSpan={TABLE_HEADERS.length}

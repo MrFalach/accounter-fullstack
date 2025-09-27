@@ -1,5 +1,6 @@
 import { ReactElement, ReactNode } from 'react';
 import { mockChargesData } from '../../mocks/charges-data';
+import { FormattedAmount } from '../common/FormattedAmount';
 
 // Constants for mock data generation
 const DOCUMENT_TYPES = ['Invoice', 'Receipt', 'Credit Note', 'Debit Note'] as const;
@@ -75,15 +76,19 @@ export const ChargeExtendedInfo = ({
   }
 
   return (
-    <div className="flex flex-col gap-5 p-6 bg-white rounded-lg shadow-lg max-w-6xl">
+    <div className="flex flex-col gap-5 p-6 bg-white rounded-lg shadow-lg w-full">
       {/* Header Section */}
       <div className="flex justify-between items-start border-b pb-4">
         <div className="flex-1">
           <div className="text-sm text-gray-500 mb-1">{charge.__typename}</div>
           <div className="flex items-center gap-4 mb-2">
             <span className="text-lg font-semibold">{charge.date}</span>
-            <span className="text-lg font-semibold text-red-600">{charge.amount}</span>
-            <span className="text-lg font-semibold">{charge.vat}</span>
+            <span className="text-lg font-semibold">
+              <FormattedAmount amount={charge.amount} />
+            </span>
+            <span className="text-lg font-semibold">
+              <FormattedAmount amount={charge.vat} showSign={false} />
+            </span>
             <span className="text-lg font-semibold">{charge.counterparty}</span>
           </div>
           <div className="text-lg font-medium text-gray-800">{charge.description}</div>
@@ -146,7 +151,9 @@ export const ChargeExtendedInfo = ({
                   <td className="px-4 py-3 text-sm text-gray-900">{charge.counterparty}</td>
                   <td className="px-4 py-3 text-sm text-gray-900">{charge.date}</td>
                   <td className="px-4 py-3 text-sm text-gray-900">{charge.date}</td>
-                  <td className="px-4 py-3 text-sm text-gray-900">{charge.amount}</td>
+                  <td className="px-4 py-3 text-sm text-gray-900">
+                    <FormattedAmount amount={charge.amount} />
+                  </td>
                   <td className="px-4 py-3 text-sm text-gray-900">
                     {index === 0 ? 'Main Account' : `Sub Account ${index + 1}`}
                   </td>
@@ -210,8 +217,12 @@ export const ChargeExtendedInfo = ({
                 return (
                   <tr key={`doc-${index}`}>
                     <td className="px-4 py-3 text-sm text-gray-900">{charge.date}</td>
-                    <td className="px-4 py-3 text-sm text-gray-900">{charge.amount}</td>
-                    <td className="px-4 py-3 text-sm text-gray-900">{charge.vat}</td>
+                    <td className="px-4 py-3 text-sm text-gray-900">
+                      <FormattedAmount amount={charge.amount} />
+                    </td>
+                    <td className="px-4 py-3 text-sm text-gray-900">
+                      <FormattedAmount amount={charge.vat} showSign={false} />
+                    </td>
                     <td className="px-4 py-3 text-sm text-gray-900">{documentType}</td>
                     <td className="px-4 py-3 text-sm text-gray-900">
                       {documentType === 'Invoice'
@@ -286,9 +297,13 @@ export const ChargeExtendedInfo = ({
                     <td className="px-4 py-3 text-sm text-gray-900">{charge.date}</td>
                     <td className="px-4 py-3 text-sm text-gray-900">{charge.date}</td>
                     <td className="px-4 py-3 text-sm text-gray-900">{debitAccount}</td>
-                    <td className="px-4 py-3 text-sm text-gray-900">{charge.amount}</td>
+                    <td className="px-4 py-3 text-sm text-gray-900">
+                      <FormattedAmount amount={charge.amount} />
+                    </td>
                     <td className="px-4 py-3 text-sm text-gray-900">{creditAccount}</td>
-                    <td className="px-4 py-3 text-sm text-gray-900">{charge.amount}</td>
+                    <td className="px-4 py-3 text-sm text-gray-900">
+                      <FormattedAmount amount={charge.amount} />
+                    </td>
                     <td className="px-4 py-3 text-sm text-gray-900">
                       {index === 0
                         ? charge.description

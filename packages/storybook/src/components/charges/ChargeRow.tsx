@@ -1,13 +1,23 @@
 import { ReactElement } from 'react';
+import {
+  ArrowLeftRight,
+  Briefcase,
+  CheckCircle,
+  Clock,
+  CreditCard,
+  Plane,
+  XCircle,
+} from 'lucide-react';
 import { ChargeData } from '../../mocks/charges-data';
+import { FormattedAmount } from '../common/FormattedAmount';
 import { ChargeExtendedInfo } from './ChargeExtendedInfo';
 
 // Constants for charge type icons and approval status colors
 const CHARGE_TYPE_ICONS = {
-  Common: '💼',
-  CreditCardBankCharge: '💳',
-  BusinessTripCharge: '✈️',
-  ConversionCharge: '📊',
+  Common: Briefcase,
+  CreditCardBankCharge: CreditCard,
+  BusinessTripCharge: Plane,
+  ConversionCharge: ArrowLeftRight,
 } as const;
 
 const APPROVAL_STATUS_COLORS = {
@@ -17,23 +27,42 @@ const APPROVAL_STATUS_COLORS = {
 } as const;
 
 // Approval badge component
-const ApprovalBadge = ({ status }: { status: string }) => (
-  <span
-    className={`px-2 py-1 text-xs font-medium rounded-full ${
-      APPROVAL_STATUS_COLORS[status as keyof typeof APPROVAL_STATUS_COLORS] ||
-      APPROVAL_STATUS_COLORS.UNAPPROVED
-    }`}
-  >
-    {status}
-  </span>
-);
+const ApprovalBadge = ({ status }: { status: string }) => {
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'APPROVED':
+        return <CheckCircle className="w-3 h-3" />;
+      case 'PENDING':
+        return <Clock className="w-3 h-3" />;
+      case 'UNAPPROVED':
+        return <XCircle className="w-3 h-3" />;
+      default:
+        return <Clock className="w-3 h-3" />;
+    }
+  };
+
+  return (
+    <span
+      className={`px-2 py-1 text-xs font-medium rounded-full flex items-center gap-1 ${
+        APPROVAL_STATUS_COLORS[status as keyof typeof APPROVAL_STATUS_COLORS] ||
+        APPROVAL_STATUS_COLORS.UNAPPROVED
+      }`}
+    >
+      {getStatusIcon(status)}
+      {status}
+    </span>
+  );
+};
 
 // Charge type icon component
-const ChargeTypeIcon = ({ type }: { type: string }) => (
-  <span className="text-lg mr-2">
-    {CHARGE_TYPE_ICONS[type as keyof typeof CHARGE_TYPE_ICONS] || '📊'}
-  </span>
-);
+const ChargeTypeIcon = ({ type }: { type: string }) => {
+  const IconComponent = CHARGE_TYPE_ICONS[type as keyof typeof CHARGE_TYPE_ICONS] || ArrowLeftRight;
+  return (
+    <div className="flex items-center mr-2">
+      <IconComponent className="w-4 h-4 text-gray-600" />
+    </div>
+  );
+};
 
 // Tags display component
 const TagsDisplay = ({ tags }: { tags: string[] }) => (
@@ -112,7 +141,9 @@ export const ChargeRow = ({ charge, isExpanded, onToggle }: ChargeRowProps): Rea
           </div>
         </td>
         <td className="px-6 py-4 text-sm text-gray-900">{charge.date}</td>
-        <td className="px-6 py-4 text-sm text-red-600 font-medium">{charge.amount}</td>
+        <td className="px-6 py-4 text-sm">
+          <FormattedAmount amount={charge.amount} />
+        </td>
         <td className="px-6 py-4 text-sm text-gray-900">{charge.vat}</td>
         <td className="px-6 py-4 text-sm text-gray-900">{charge.counterparty}</td>
         <td className="px-6 py-4 text-sm text-gray-900 max-w-xs truncate">{charge.description}</td>

@@ -60,18 +60,27 @@ export const MondayAmountCell = ({
 }: {
   amount: number;
   currency?: string;
-}): ReactElement => (
-  <div className="flex items-center gap-2">
-    <DollarSign className="w-4 h-4 text-gray-400" />
-    <span className={`text-sm font-medium ${amount >= 0 ? 'text-green-600' : 'text-red-500'}`}>
-      {new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency,
-        minimumFractionDigits: 2,
-      }).format(amount)}
-    </span>
-  </div>
-);
+}): ReactElement => {
+  const isPositive = amount >= 0;
+  const sign = isPositive ? '+' : '-';
+  const absoluteAmount = Math.abs(amount);
+
+  const formattedAmount = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency,
+    minimumFractionDigits: 2,
+  }).format(absoluteAmount);
+
+  return (
+    <div className="flex items-center gap-2">
+      <DollarSign className="w-4 h-4 text-gray-400" />
+      <span className={`text-sm font-mono ${isPositive ? 'text-green-600' : 'text-red-500'}`}>
+        <span className="inline-block w-3 text-center">{sign}</span>
+        {formattedAmount}
+      </span>
+    </div>
+  );
+};
 
 // Type cell component
 export const MondayTypeCell = ({ type }: { type: string }): ReactElement => (
