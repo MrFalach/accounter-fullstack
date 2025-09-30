@@ -193,11 +193,12 @@ export const InteractiveExample: Story = {
           This demo shows the interactive features of the documents table:
         </p>
         <ul className="text-blue-700 text-sm list-disc list-inside space-y-1">
-          <li>Click the green checkmark buttons to accept AI suggestions</li>
-          <li>Click business names to navigate to their details</li>
-          <li>Click file icons to view documents</li>
-          <li>Click edit icons to modify documents</li>
-          <li>Click column headers to sort data</li>
+          <li>🟢 Click green checkmark buttons to accept AI suggestions (yellow backgrounds)</li>
+          <li>🔴 Red dots indicate missing required data</li>
+          <li>🏢 Click business names to navigate to their details</li>
+          <li>📁 Click file icons to view/download documents</li>
+          <li>✏️ Click edit icons to open the document editor modal</li>
+          <li>🔄 Click column headers to sort data</li>
         </ul>
       </div>
       <DocumentsTable data={data} onChange={onChange} />
@@ -267,6 +268,41 @@ export const FileAttachmentsShowcase: Story = {
       description: {
         story:
           'Demonstrates file attachment functionality. Click photo icons to view images, file icons to download PDFs. Missing files show error indicators.',
+      },
+    },
+  },
+};
+
+// Document editing modal showcase
+export const DocumentEditingShowcase: Story = {
+  args: {
+    data: mockDocumentsData.slice(0, 5),
+    onChange: action('document-edited'),
+  },
+  render: ({ data, onChange }) => (
+    <div className="p-4">
+      <div className="mb-4 p-4 bg-green-50 rounded-lg">
+        <h3 className="font-semibold text-green-900">Document Editing Modal</h3>
+        <p className="text-green-700 text-sm mb-2">
+          Click any edit button (✏️) to open the document editing modal:
+        </p>
+        <ul className="text-green-700 text-sm list-disc list-inside space-y-1">
+          <li>📝 Edit document type, serial number, amount, VAT, date, and currency</li>
+          <li>📋 Copy document ID with the copy button</li>
+          <li>🔗 Unlink documents from transactions</li>
+          <li>🗑️ Delete documents with confirmation</li>
+          <li>💾 Save changes or cancel edits</li>
+        </ul>
+      </div>
+      <DocumentsTable data={data} onChange={onChange} />
+    </div>
+  ),
+  parameters: {
+    layout: 'padded',
+    docs: {
+      description: {
+        story:
+          'Shows the complete document editing workflow with inline modal, form fields, and document management actions.',
       },
     },
   },
