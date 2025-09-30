@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Edit2 } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Edit2, X } from 'lucide-react';
 import {
   ColumnDef,
   flexRender,
@@ -92,13 +92,24 @@ const createColumns = (): ColumnDef<DocumentsTableRowType>[] => [
   },
 ];
 
-export const DocumentsTable: React.FC<DocumentsTableProps> = ({ data }) => {
+export const DocumentsTable: React.FC<DocumentsTableProps> = ({ data, onChange }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [editDocumentId, setEditDocumentId] = useState<string | undefined>(undefined);
+
+  // Add editDocument function to each row (memoized to prevent re-render loops)
+  const dataWithActions = useMemo(() =>
+    data.map(document => ({
+      ...document,
+      editDocument: () => setEditDocumentId(document.id),
+      onUpdate: onChange || (() => {}),
+    })),
+    [data, onChange]
+  );
 
   const columns = createColumns();
 
   const table = useReactTable({
-    data,
+    data: dataWithActions,
     columns,
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
@@ -144,6 +155,117 @@ export const DocumentsTable: React.FC<DocumentsTableProps> = ({ data }) => {
           )}
         </TableBody>
       </Table>
+
+      {/* Basic Modal Container - Step 2 */}
+      {editDocumentId && (
+        <div className="fixed inset-0 z-50 bg-black/20">
+          <div className="fixed bottom-0 left-0 right-0 max-h-[80vh] bg-white shadow-lg outline outline-2 outline-indigo-300 overflow-y-auto">
+            <div className="flex items-center justify-between p-4 border-b">
+              <h1 className="text-xl font-semibold text-gray-900">Edit Document</h1>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setEditDocumentId(undefined)}
+                className="h-6 w-6"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+            <div className="p-6 space-y-4">
+              <div className="text-sm text-gray-500 mb-4">Document ID: {editDocumentId}</div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Document Type
+                  </label>
+                  <select className="w-full p-2 border border-gray-300 rounded-md">
+                    <option>Invoice</option>
+                    <option>Receipt</option>
+                    <option>Credit Invoice</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Serial Number
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                    placeholder="Enter serial number"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Amount
+                  </label>
+                  <input
+                    type="number"
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                    placeholder="0.00"
+                    step="0.01"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    VAT
+                  </label>
+                  <input
+                    type="number"
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                    placeholder="0.00"
+                    step="0.01"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Date
+                  </label>
+                  <input
+                    type="date"
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Currency
+                  </label>
+                  <select className="w-full p-2 border border-gray-300 rounded-md">
+                    <option>ILS</option>
+                    <option>USD</option>
+                    <option>EUR</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="flex justify-end space-x-2 pt-4 border-t">
+                <Button
+                  variant="outline"
+                  onClick={() => setEditDocumentId(undefined)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={() => {
+                    // Mock save functionality
+                    console.log('Saving document:', editDocumentId);
+                    onChange?.();
+                    setEditDocumentId(undefined);
+                  }}
+                >
+                  Save Changes
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

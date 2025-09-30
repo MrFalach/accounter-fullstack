@@ -1,6 +1,6 @@
 import { action } from '@storybook/addon-actions';
 import type { Meta, StoryObj } from '@storybook/react';
-import { DocumentsTable } from '../src/components/documents-table';
+import { DocumentsTable } from '../src/components/documents-table/DocumentsTable';
 import { DocumentType } from '../src/components/documents-table/types';
 import {
   mockDocumentsData,
