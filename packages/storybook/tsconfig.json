@@ -6,22 +6,15 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "moduleResolution": "bundler",
-    "baseUrl": ".",
-    "rootDir": "..",
     "outDir": "./dist",
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    "types": ["react", "react-dom"],
-    "paths": {
-      "@accounter/client": ["../client/src"],
-      "@accounter/client/*": ["../client/src/*"]
-    }
+    "types": ["react", "react-dom"]
   },
   "include": [
     ".storybook/**/*",
     "stories/**/*",
-    "src/**/*",
-    "../client/src/**/*"
+    "src/**/*"
   ],
   "exclude": [
     "node_modules",
