@@ -284,3 +284,97 @@ yarn storybook:build
 - **Forms**: Business forms, transaction forms, document upload
 - **Cards**: Summary cards, charge details, business trip info
 - **Complex UI**: Expandable rows, modals, multi-step workflows
+
+### Dependency Management Rule
+
+**IMPORTANT**: Do not install duplicate dependencies in the Storybook package.json. Instead:
+
+- **Use client dependencies**: Import all UI components, utilities, and libraries directly from `@accounter/client`
+- **Leverage workspace dependency**: Storybook already depends on `@accounter/client` workspace, giving access to all client dependencies
+- **Import pattern**: Use imports like `from '../../../../client/src/components/ui/button'`
+- **Benefits**:
+  - Ensures consistency between original and Storybook components
+  - Prevents version conflicts and dependency bloat
+  - Maintains single source of truth for UI libraries
+  - Simplifies future migration when Storybook components replace originals
+
+**Example**:
+```typescript
+// ✅ CORRECT - Use client dependencies
+import { Button } from '../../../../client/src/components/ui/button';
+import { Indicator } from '@mantine/core'; // Available through client workspace
+
+// ❌ WRONG - Don't duplicate in storybook package.json
+// Installing @mantine/core separately in storybook
+```
+
+This rule ensures Storybook components remain true duplicates of client components with identical dependencies.
+
+### Import vs Duplicate Rule
+
+**IMPORTANT**: Follow this clear separation between what to import and what to duplicate:
+
+#### Always Import from Client (UI Components)
+- **UI components** from `client/src/components/ui/*`:
+  - Button, Badge, Table, Input, Dialog, etc.
+  - All shadcn/ui components
+  - Basic form elements and layout components
+- **Utilities** like `cn()`, helper functions
+- **External libraries** available through client workspace
+- **Import pattern**: Use tsconfig path aliases when available:
+```typescript
+// ✅ CORRECT - Import UI components
+import { Button } from '@accounter/client/components/ui/button';
+import { Badge } from '@accounter/client/components/ui/badge';
+```
+
+#### Always Duplicate to Storybook (Business Components)
+- **Business logic components**: ChargesTable, DocumentsTable, TransactionsTable
+- **Feature-specific components**: Business forms, complex workflows
+- **Components that need GraphQL data**: Any component using useQuery, useMutation
+- **Complex state management**: Components with business-specific state
+
+#### Why This Approach?
+- **UI components are stable**: Basic UI elements rarely change and work with any data
+- **Business components need adaptation**: They require mock data instead of GraphQL queries
+- **Clean separation**: Keeps pure UI separate from business logic
+- **Future migration**: When Storybook components replace originals, UI imports remain unchanged
+
+**Example Structure:**
+```typescript
+// In storybook DocumentsTable component:
+import { Button, Table, Badge } from '@accounter/client/components/ui'; // ✅ Import
+import { DocumentsTable } from './DocumentsTable'; // ✅ Duplicate with mock data
+```
+
+### Development Workflow Rule
+
+**IMPORTANT**: Follow a token-efficient, approval-based workflow:
+
+1. **Analyze First**: Carefully read and understand the user's request before taking any action
+2. **Plan and Explain**: Describe exactly what you plan to do, including:
+   - Which files you'll modify/create
+   - What changes you'll make
+   - Why this approach is best
+3. **Wait for Approval**: Always wait for explicit user approval before proceeding with tool usage
+4. **Be Concise**: Focus only on what was requested - avoid unnecessary exploration or extra work
+5. **Confirm Understanding**: If the request is unclear, ask for clarification rather than making assumptions
+
+**Benefits**:
+- Saves tokens by avoiding unnecessary tool usage
+- Ensures alignment with user expectations
+- Prevents rework and wasted effort
+- Maintains clear communication throughout development
+
+**Example**:
+```
+User: "Fix the button styling"
+Claude: "I plan to:
+1. Read the current button component
+2. Update the CSS classes to match the design
+3. Test the changes work properly
+Should I proceed?"
+User: "Yes"
+Claude: [proceeds with the work]
+```
+- to memorize, you aloowed to change files only insdie storybook folder
